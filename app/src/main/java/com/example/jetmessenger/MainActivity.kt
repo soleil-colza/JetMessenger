@@ -28,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
@@ -58,7 +59,9 @@ fun UserInputScreen() {
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = { /* FABのクリック処理 */ }) {
+            FloatingActionButton(
+                onClick = { /* FABのクリック処理 */ },
+            ) {
                 Icon(imageVector = Icons.Default.Send, contentDescription = "Send")
             }
         }
@@ -71,11 +74,12 @@ fun UserInputScreen() {
                 contentAlignment = Alignment.Center
             ) {
                 TextField(
+                    modifier = Modifier.padding(horizontal = 16.dp),
                     value = textState.value,
-                    onValueChange = { textState.value = it }
+                    onValueChange = { textState.value = it },
+                    label = { Text("Type whatever you like 🙌🏻") },
                 )
             }
-
         }
 
     }
