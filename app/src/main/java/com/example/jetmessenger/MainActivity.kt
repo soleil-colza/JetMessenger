@@ -4,16 +4,12 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
-import androidx.compose.material.icons.materialIcon
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -23,15 +19,18 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import kotlinx.coroutines.rememberCoroutineScope //ここのエラーが消えません😭
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,12 +54,20 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun UserInputScreen() {
 
+    val scope = rememberCoroutineScope()
+
+
     val textState = remember { mutableStateOf("") }
 
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* FABのクリック処理 */ },
+                onClick = {
+                    // このスコープ内で起動
+                    scope.launch(Dispatchers.IO) {
+                        client.sendMessage(DiscordMessage(textState.value))
+                    }
+                },
             ) {
                 Icon(imageVector = Icons.Default.Send, contentDescription = "Send")
             }
@@ -81,7 +88,5 @@ fun UserInputScreen() {
                 )
             }
         }
-
     }
-
 }
