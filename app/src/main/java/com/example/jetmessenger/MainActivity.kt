@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -27,10 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import kotlinx.coroutines.rememberCoroutineScope //ここのエラーが消えません😭
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +58,7 @@ fun UserInputScreen() {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
+                modifier = Modifier.padding(16.dp),
                 onClick = {
                     // このスコープ内で起動
                     scope.launch(Dispatchers.IO) {
@@ -74,8 +71,6 @@ fun UserInputScreen() {
         }
     ) {
 
-        Column(modifier = Modifier.fillMaxSize()) {
-
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -86,7 +81,7 @@ fun UserInputScreen() {
                     onValueChange = { textState.value = it },
                     label = { Text("Type whatever you like 🙌🏻") },
                 )
-            }
+
         }
     }
 }
