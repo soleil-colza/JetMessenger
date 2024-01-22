@@ -1,8 +1,6 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.kapt")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -63,16 +61,12 @@ android {
 
 dependencies {
 
-    implementation("com.google.dagger:hilt-android:2.44")
     implementation("com.google.android.gms:play-services-base:18.3.0")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
 
-    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.12")
 
     val retrofit_version = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
@@ -93,10 +87,6 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 android.buildFeatures.buildConfig = true
