@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -28,17 +30,27 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+            val WEBHOOK_URL: String by project
+            buildConfigField("String", "WEBHOOK_URL", WEBHOOK_URL)
+        }
+
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
@@ -51,8 +63,17 @@ android {
 
 dependencies {
 
+    implementation("com.google.dagger:hilt-android:2.44")
+    implementation("com.google.android.gms:play-services-base:18.3.0")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.12")
+
     val retrofit_version = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
@@ -73,3 +94,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
+
+kapt {
+    correctErrorTypes = true
+}
+
+android.buildFeatures.buildConfig = true

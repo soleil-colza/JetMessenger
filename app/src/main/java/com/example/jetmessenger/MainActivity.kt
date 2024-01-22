@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,20 +26,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint //Hiltのエントリーポイント
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val viewModel: WebhookApi.MainViewModel by viewModels()
+
         setContent {
             JetMessengerTheme {
-                // A surface container using the 'background' color from the theme
+                //画面のその他の要素を表示
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    UserInputScreen()
+                    UserInputScreen(viewModel)
                 }
             }
         }
@@ -48,7 +52,7 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserInputScreen() {
+fun UserInputScreen(viewModel: WebhookApi.MainViewModel) {
 
     val scope = rememberCoroutineScope()
 
@@ -59,12 +63,7 @@ fun UserInputScreen() {
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(16.dp),
-                onClick = {
-                    // このスコープ内で起動
-                    scope.launch(Dispatchers.IO) {
-                        client.sendMessage(DiscordMessage(textState.value))
-                    }
-                },
+                onClick = { viewModel.sendMessage() },
             ) {
                 Icon(imageVector = Icons.Default.Send, contentDescription = "Send")
             }
@@ -73,6 +72,7 @@ fun UserInputScreen() {
 
             Box(
                 modifier = Modifier.fillMaxSize(),
+
                 contentAlignment = Alignment.Center
             ) {
                 TextField(
@@ -81,7 +81,6 @@ fun UserInputScreen() {
                     onValueChange = { textState.value = it },
                     label = { Text("Type whatever you like 🙌🏻") },
                 )
-
         }
     }
 }
