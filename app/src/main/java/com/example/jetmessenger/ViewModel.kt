@@ -6,8 +6,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
-import retrofit2.http.Body
-import retrofit2.http.POST
 
 
 //Retrofitインスタンスを作成。Base URLを指定しビルダーパターンでインスタンスを生成。
@@ -15,17 +13,11 @@ val retrofit = Retrofit.Builder()
     .baseUrl(WEBHOOK_URL)
     .build()
 
-// Retrofitインターフェース
-interface WebhookApi{
-    @POST
-    suspend fun sendMessage(@Body message: DiscordMessage)
-
-
 //ViewModelクラス(UIロジックを扱うクラス)を, ViewModel()を継承する形で定義。
 class MainViewModel : ViewModel() {
 
     //RetrofitインスタンスからWebhookApiのインスタンスを生成。インターフェイスの実装が動的に生成される。
-    val webhookApi = retrofit.create(WebhookApi::class.java)
+    val DiscordWebhook = retrofit.create(DiscordWebhook::class.java)
 
     //MutableLiveDataを生成。これはUIの状態を保持するために使用する。
     val textState = MutableLiveData<String>()
@@ -50,10 +42,9 @@ class MainViewModel : ViewModel() {
 
 
             if (message != null) {
-                webhookApi.sendMessage(message)
+                DiscordWebhook.sendMessage(message)
             }
 
         }
     }
-}
 }

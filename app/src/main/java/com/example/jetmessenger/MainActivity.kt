@@ -27,11 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val viewModel: WebhookApi.MainViewModel by viewModels()
+        val viewModel: MainViewModel by viewModels()
 
         setContent {
             JetMessengerTheme {
@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    UserInputScreen(viewModel)
+                    UserInputScreen(MainViewModel())
                 }
             }
         }
@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserInputScreen(viewModel: WebhookApi.MainViewModel) {
+fun UserInputScreen(viewModel: MainViewModel) {
 
     val scope = rememberCoroutineScope()
 
