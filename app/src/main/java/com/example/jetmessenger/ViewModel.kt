@@ -9,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.http.Body
 import retrofit2.http.POST
 
+
 //Retrofitインスタンスを作成。Base URLを指定しビルダーパターンでインスタンスを生成。
 val retrofit = Retrofit.Builder()
     .baseUrl(WEBHOOK_URL)
@@ -55,11 +56,4 @@ class MainViewModel : ViewModel() {
         }
     }
 }
-
-    // WebhookApiインターフェイスを定義。
-    // Retrofitの@POSTアノテーションでHTTPメソッドを指定し、@Bodyアノテーションでパスとリクエストボディの形を定義している。
-    interface WebhookApi{
-        @POST("/webhook")
-        suspend fun sendMessage(@Body message: DiscordMessage)
-    }
 }
