@@ -57,23 +57,27 @@ fun UserInputScreen(viewModel: MainViewModel) {
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(16.dp),
-                onClick = { viewModel.sendMessage() },
+                onClick = { viewModel.sendMessage() }
             ) {
-                Icon(imageVector = Icons.Default.Send, contentDescription = "Send")
+                Icon(
+                    imageVector = Icons.Default.Send,
+                    contentDescription = "Send"
+                )
             }
         }
-    ) {
+    ) { paddingValues ->
 
             Box(
-                modifier = Modifier.fillMaxSize(),
-
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 TextField(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     value = textState.value,
                     onValueChange = { textState.value = it },
-                    label = { Text("Type whatever you like 🙌🏻") },
+                    label = { Text("Type whatever you like 🙌🏻") }
                 )
         }
     }
