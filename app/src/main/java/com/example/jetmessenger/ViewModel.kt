@@ -1,6 +1,8 @@
 package com.example.jetmessenger
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.jetmessenger.BuildConfig.WEBHOOK_URL
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +19,7 @@ val retrofit = Retrofit.Builder()
 class MainViewModel : ViewModel() {
 
     //RetrofitインスタンスからWebhookApiのインスタンスを生成。インターフェイスの実装が動的に生成される。
-    val DiscordWebhook = retrofit.create(DiscordWebhook::class.java)
+    val discordWebhook = retrofit.create(discordWebhook::class.java)
 
     //MutableLiveDataを生成。これはUIの状態を保持するために使用する。
     val textState = MutableLiveData<String>()
@@ -30,20 +32,19 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
 
             val rawText = textState.value
-            var message: DiscordMessage? = null
+            var message: discordMessage? = null
 
             if (!rawText.isNullOrEmpty()) {
 
                 // textStateの値からDiscordMessageインスタンスを生成。
                 //　Retrofitを通してAPIを叩き、WebhookApiに渡して送信。
-                // !!でnull許容型を非null型に変換。
-                message = DiscordMessage(rawText)
+                message = discordMessage(rawText)
             }
 
             // ?.はSafe Call, letもnullでなければalsoの処理を実行する。
             textState.value
-                ?.let { text -> DiscordMessage(text) }
-                ?.also { message -> DiscordWebhook.sendMessage(message) }
+                ?.let { text -> discordMessage(text) }
+                ?.also { message -> discordWebhook.sendMessage(message) }
 
         }
     }

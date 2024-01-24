@@ -67,18 +67,18 @@ fun UserInputScreen(viewModel: MainViewModel) {
         }
     ) { paddingValues ->
 
-            Box(
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                TextField(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    value = textState.value,
-                    onValueChange = { textState.value = it },
-                    label = { Text("Type whatever you like 🙌🏻") }
-                )
+        Box(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            TextField(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                value = textState.value,
+                onValueChange = { textState.value = it },
+                label = { Text("Type whatever you like 🙌🏻") }
+            )
         }
     }
 }
