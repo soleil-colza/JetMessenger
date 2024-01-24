@@ -40,10 +40,10 @@ class MainViewModel : ViewModel() {
                 message = DiscordMessage(rawText)
             }
 
-
-            if (message != null) {
-                DiscordWebhook.sendMessage(message)
-            }
+            // ?.はSafe Call, letもnullでなければalsoの処理を実行する。
+            textState.value
+                ?.let { text -> DiscordMessage(text) }
+                ?.also { message -> DiscordWebhook.sendMessage(message) }
 
         }
     }
