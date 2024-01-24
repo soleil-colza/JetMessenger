@@ -19,7 +19,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,9 +27,10 @@ import com.example.jetmessenger.ui.theme.JetMessengerTheme
 
 
 class MainActivity : ComponentActivity() {
+
+    val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel: MainViewModel by viewModels()
 
         setContent {
             JetMessengerTheme {
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    UserInputScreen(MainViewModel())
+                    UserInputScreen(viewModel = viewModel)
                 }
             }
         }
@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun UserInputScreen(viewModel: MainViewModel) {
 
-    val textState = remember { mutableStateOf("") }
+    val textState = remember { viewModel.textState }
 
     Scaffold(
         floatingActionButton = {
