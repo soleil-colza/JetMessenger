@@ -18,7 +18,7 @@ val retrofit = Retrofit.Builder()
 class MainViewModel : ViewModel() {
 
     //RetrofitインスタンスからWebhookApiのインスタンスを生成。インターフェイスの実装が動的に生成される。
-    val discordWebhook = retrofit.create(discordWebhook::class.java)
+    val discordWebhook = retrofit.create(DiscordWebhook::class.java)
 
     //MutableLiveDataを生成。これはUIの状態を保持するために使用する。
     val textState = MutableLiveData<String>()
@@ -27,18 +27,18 @@ class MainViewModel : ViewModel() {
     fun sendMessage() {
         viewModelScope.launch(Dispatchers.IO) {
             val rawText = textState.value
-            var message: discordMessage? = null
+            var message: DiscordMessage? = null
             if (!rawText.isNullOrEmpty()) {
 
                 // textStateの値からDiscordMessageインスタンスを生成。
                 //　Retrofitを通してAPIを叩き、WebhookApiに渡して送信。
-                message = discordMessage(rawText)
+                message = DiscordMessage(rawText)
                 discordWebhook.sendMessage(message)
             }
 
             // ?.はSafe Call, letもnullでなければalsoの処理を実行する。
             textState.value
-                ?.let { text -> discordMessage(text) }
+                ?.let { text -> DiscordMessage(text) }
                 ?.also { message -> discordWebhook.sendMessage(message) }
 
         }
