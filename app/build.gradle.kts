@@ -62,7 +62,6 @@ android {
 }
 
 dependencies {
-    val compose_version = "1.1.0-alpha04"
     implementation("androidx.compose.material:material-icons-extended:$compose_version")
 
     implementation("com.google.android.gms:play-services-base:18.3.0")
