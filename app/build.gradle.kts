@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+val compose_version = "1.4.3"
+
 android {
     namespace = "com.example.jetmessenger"
     compileSdk = 34
@@ -50,7 +52,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "$compose_version"
     }
     packaging {
         resources {
@@ -60,6 +62,8 @@ android {
 }
 
 dependencies {
+    val compose_version = "1.1.0-alpha04"
+    implementation("androidx.compose.material:material-icons-extended:$compose_version")
 
     implementation("com.google.android.gms:play-services-base:18.3.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

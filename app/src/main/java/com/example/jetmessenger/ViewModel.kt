@@ -27,10 +27,10 @@ class MainViewModel : ViewModel() {
             val rawText = textState.value
             var message: DiscordMessage? = null
             if (!rawText.isNullOrEmpty()) {
-
                 // textStateの値からDiscordMessageインスタンスを生成。
                 //　Retrofitを通してAPIを叩き、WebhookApiに渡して送信。
                 message = DiscordMessage(rawText)
+
                 DiscordWebhook.sendMessage(message)
             }
 
