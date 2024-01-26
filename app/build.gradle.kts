@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+val compose_version = "1.4.3"
+
 android {
     namespace = "com.example.jetmessenger"
     compileSdk = 34
@@ -28,19 +30,29 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+            val WEBHOOK_URL: String by project
+            buildConfigField("String", "WEBHOOK_URL", WEBHOOK_URL)
+        }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+
     kotlinOptions {
         jvmTarget = "1.8"
+
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
+
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "$compose_version"
     }
     packaging {
         resources {
@@ -50,6 +62,18 @@ android {
 }
 
 dependencies {
+    implementation("androidx.compose.material:material-icons-extended:$compose_version")
+
+    implementation("com.google.android.gms:play-services-base:18.3.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
+    val retrofit_version = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
+    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
