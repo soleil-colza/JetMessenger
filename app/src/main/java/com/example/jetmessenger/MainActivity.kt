@@ -49,6 +49,7 @@ class MainActivity : ComponentActivity() {
 fun UserInputScreen(viewModel: MainViewModel) {
 
     val textState = remember { viewModel.textState }
+    val state = viewModel.textState
 
     Scaffold(
         floatingActionButton = {
