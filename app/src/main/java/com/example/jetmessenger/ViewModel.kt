@@ -27,10 +27,6 @@ class MainViewModel : ViewModel() {
             val rawText = textState.value
             var message: DiscordMessage? = null
 
-            if (!rawText.isNullOrEmpty()) {
-                message?.let { DiscordWebhook.sendMessage(it) }
-            }
-
             textState.value?.let { text ->
                 // textStateの値がnullでない場合、DiscordMessageを生成してWebhookに送信
                 DiscordWebhook.sendMessage(DiscordMessage(text))
