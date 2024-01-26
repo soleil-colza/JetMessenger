@@ -33,7 +33,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             JetMessengerTheme {
-                //画面のその他の要素を表示
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
