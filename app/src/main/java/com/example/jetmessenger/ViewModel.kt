@@ -19,7 +19,7 @@ class MainViewModel : ViewModel() {
     public val textState = MutableLiveData("")
 
     //RetrofitインスタンスからWebhookApiのインスタンスを生成。インターフェイスの実装が動的に生成される。
-    val discordWebhook = retrofit.create(DiscordWebhook::class.java)
+    private val discordWebhook = retrofit.create(DiscordWebhook::class.java)
 
     //sendMessageメソッドで, viewModelScopeを使ってコルーチンを発行。IOスレッドでバックグラウンド処理を実行する。
     fun sendMessage() {
