@@ -16,7 +16,7 @@ val retrofit = Retrofit.Builder()
 //ViewModelクラス(UIロジックを扱うクラス)を, ViewModel()を継承する形で定義。
 class MainViewModel : ViewModel() {
 
-    public val textState = MutableLiveData("")
+    val textState = MutableLiveData("")
 
     //RetrofitインスタンスからWebhookApiのインスタンスを生成。インターフェイスの実装が動的に生成される。
     private val discordWebhook = retrofit.create(DiscordWebhook::class.java)
