@@ -27,7 +27,7 @@ import com.example.jetmessenger.ui.theme.JetMessengerTheme
 
 class MainActivity : ComponentActivity() {
 
-    val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,8 +48,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun UserInputScreen(viewModel: MainViewModel) {
 
-    val textState = remember { viewModel.textState }
-    val state = viewModel.textState
+    val state = remember { viewModel.textState }
 
     Scaffold(
         floatingActionButton = {
@@ -73,8 +72,8 @@ fun UserInputScreen(viewModel: MainViewModel) {
         ) {
             TextField(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                value = textState.value ?: "",
-                onValueChange = { viewModel.textState.value = it },
+                value = state.value ?: "",
+                onValueChange = { state.value },
                 label = { Text("Type whatever you like 🙌🏻") }
             )
         }
