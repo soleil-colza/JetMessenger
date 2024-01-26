@@ -20,7 +20,6 @@ class MainViewModel : ViewModel() {
     fun sendMessage() {
         viewModelScope.launch(Dispatchers.IO) {
             textState.value?.let { text ->
-                // textStateの値がnullでない場合、DiscordMessageを生成してWebhookに送信
                 discordWebhook.sendMessage(DiscordMessage(text))
             }
         }
