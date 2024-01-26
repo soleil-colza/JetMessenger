@@ -73,7 +73,7 @@ fun UserInputScreen(viewModel: MainViewModel) {
             TextField(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 value = state.value ?: "",
-                onValueChange = { state.value },
+                onValueChange = { newValue -> state.value = newValue },
                 label = { Text("Type whatever you like 🙌🏻") }
             )
         }
