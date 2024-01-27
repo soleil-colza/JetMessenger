@@ -23,9 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
-import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
@@ -57,7 +55,7 @@ fun UserInputScreen(viewModel: MainViewModel) {
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(16.dp),
-                onClick = { viewModel.sendMessage() }
+                onClick = { viewModel.sendMessage(state) }
             ) {
                 Icon(
                     imageVector = Icons.Default.Send,
@@ -77,9 +75,7 @@ fun UserInputScreen(viewModel: MainViewModel) {
                 modifier = Modifier.padding(horizontal = 16.dp),
                 value = state,
                 onValueChange = {
-                    viewModel.viewModelScope.launch {
-                        viewModel._textState.emit(it)
-                    }
+                    viewModel.sendMessage(it)
                 },
                 label = { Text("Type whatever you like 🙌🏻") }
             )

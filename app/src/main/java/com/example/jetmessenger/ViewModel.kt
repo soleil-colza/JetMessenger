@@ -15,15 +15,14 @@ val retrofit = Retrofit.Builder()
 
 class MainViewModel : ViewModel() {
 
-    val _textState = MutableStateFlow("")
+    private val _textState = MutableStateFlow("")
     val textState = _textState.asStateFlow()
 
     private val discordWebhook = retrofit.create(DiscordWebhook::class.java)
-    fun sendMessage() {
+    fun sendMessage(newText: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            textState.value?.let { text ->
-                discordWebhook.sendMessage(DiscordMessage(text))
-            }
+            _textState.value = newText
+            discordWebhook.sendMessage(DiscordMessage(newText))
         }
     }
 }
