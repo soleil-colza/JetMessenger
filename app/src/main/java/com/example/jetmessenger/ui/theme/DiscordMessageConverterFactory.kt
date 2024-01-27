@@ -7,7 +7,7 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import java.lang.reflect.Type
 
-class DiscordMessageConverterFactory : Converter.Factory() {
+class DiscordMessageConverterFactory(contentType: String) : Converter.Factory() {
 
     override fun responseBodyConverter(
         type: Type,
