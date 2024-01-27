@@ -1,15 +1,18 @@
 package com.example.jetmessenger
 
+import com.google.gson.Gson
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-// メッセージを送信するインターフェース
 interface DiscordWebhook {
-    @POST
-    suspend fun sendMessage(@Body message: DiscordMessage)
+    @POST("sendMessage")
+    suspend fun sendMessage(@Body discordMessage: DiscordMessage)
 }
 
-// 送信するデータクラス
-data class DiscordMessage(
-    val content: String
-)
+data class DiscordMessage(val text: String) {
+    fun toJson(): String = GsonSingleton.gson.toJson(this)
+}
+
+object GsonSingleton {
+    val gson: Gson = Gson()
+}
