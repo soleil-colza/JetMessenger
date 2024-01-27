@@ -15,7 +15,7 @@ val retrofit = Retrofit.Builder()
 
 class MainViewModel : ViewModel() {
 
-    private val _textState = MutableStateFlow("")
+    val _textState = MutableStateFlow("")
     val textState = _textState.asStateFlow()
 
     private val discordWebhook = retrofit.create(DiscordWebhook::class.java)

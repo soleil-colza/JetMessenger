@@ -18,11 +18,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
+import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
@@ -48,7 +51,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun UserInputScreen(viewModel: MainViewModel) {
 
-    val state = remember { viewModel.textState }
+    val state by viewModel.textState.collectAsStateWithLifecycle()
 
     Scaffold(
         floatingActionButton = {
@@ -72,8 +75,12 @@ fun UserInputScreen(viewModel: MainViewModel) {
         ) {
             TextField(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                value = state.value ?: "",
-                onValueChange = { newValue -> state.value = newValue },
+                value = state,
+                onValueChange = {
+                    viewModel.viewModelScope.launch {
+                        viewModel._textState.emit(it)
+                    }
+                },
                 label = { Text("Type whatever you like 🙌🏻") }
             )
         }
