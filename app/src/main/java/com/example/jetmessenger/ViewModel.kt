@@ -28,7 +28,11 @@ class MainViewModel : ViewModel() {
     fun sendMessage(newText: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _textState.value = newText
-            discordWebhook.sendMessage(DiscordMessage(content = newText))
+            discordWebhook.sendMessage(
+                DiscordMessage(content = newText),
+                webhookId = BuildConfig.WEBHOOK_ID,
+                webhookToken = BuildConfig.WEBHOOK_TOKEN
+            )
         }
     }
 }
