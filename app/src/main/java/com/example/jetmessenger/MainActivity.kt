@@ -1,9 +1,11 @@
 package com.example.jetmessenger
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -29,6 +31,7 @@ import com.example.jetmessenger.ui.theme.JetMessengerTheme
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
+    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,6 +48,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserInputScreen(viewModel: MainViewModel) {
@@ -55,7 +59,7 @@ fun UserInputScreen(viewModel: MainViewModel) {
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(16.dp),
-                onClick = { viewModel.sendMessge(state) }
+                onClick = { viewModel.sendMessage(state) }
             ) {
                 Icon(
                     imageVector = Icons.Default.Send,
