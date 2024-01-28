@@ -55,7 +55,7 @@ fun UserInputScreen(viewModel: MainViewModel) {
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(16.dp),
-                onClick = { viewModel.sendMessage(state) }
+                onClick = { viewModel.sendMessge(state) }
             ) {
                 Icon(
                     imageVector = Icons.Default.Send,
@@ -74,9 +74,7 @@ fun UserInputScreen(viewModel: MainViewModel) {
             TextField(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 value = state,
-                onValueChange = {
-                    viewModel.sendMessage(it)
-                },
+                onValueChange = {},
                 label = { Text("Type whatever you like 🙌🏻") }
             )
         }
