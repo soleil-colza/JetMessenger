@@ -20,7 +20,7 @@ interface DiscordWebhook {
 }
 
 val retrofit: Retrofit = Retrofit.Builder()
-    .baseUrl("https://discord.com/api/webhooks/1194601189988389007/RXOsVO_r7FfUoQf8KTRTRIol7SVx1zWWrvN9eT6vcdgLQYJoxmZ88PjW00jnhLpUh9Qk/")
+    .baseUrl("https://discord.com/api/")
     .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().add(KotlinJsonAdapterFactory()).build()))
     .client(httpClient)
     .build()
