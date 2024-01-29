@@ -33,6 +33,10 @@ android {
         debug {
             val WEBHOOK_URL: String by project
             buildConfigField("String", "WEBHOOK_URL", WEBHOOK_URL)
+            val WEBHOOK_ID: String by project
+            buildConfigField("String", "WEBHOOK_ID", WEBHOOK_ID)
+            val WEBHOOK_TOKEN: String by project
+            buildConfigField("String", "WEBHOOK_TOKEN", WEBHOOK_TOKEN)
         }
 
     }

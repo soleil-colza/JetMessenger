@@ -8,15 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-
-val logger = HttpLoggingInterceptor()
-    .setLevel(HttpLoggingInterceptor.Level.BODY)
-
-val httpClient = OkHttpClient.Builder()
-    .addInterceptor(logger)
-    .build()
 
 class MainViewModel : ViewModel() {
 
