@@ -26,4 +26,8 @@ class MainViewModel : ViewModel() {
             )
         }
     }
+    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+    fun updateText(newText: String) {
+        _textState.value = newText
+    }
 }
