@@ -15,7 +15,7 @@
         tools:ignore="Instantiatable">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ChatActivity"
             android:exported="true"
             android:theme="@style/Theme.JetMessenger">
             <intent-filter>
