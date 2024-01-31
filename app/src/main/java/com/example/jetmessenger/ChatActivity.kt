@@ -40,7 +40,7 @@ class ChatActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    UserInputScreen(viewModel = viewModel)
+                    ChatScreen(viewModel = viewModel)
                 }
             }
         }
@@ -50,7 +50,7 @@ class ChatActivity : ComponentActivity() {
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserInputScreen(viewModel: ChatViewModel) {
+fun ChatScreen(viewModel: ChatViewModel) {
 
     val state by viewModel.textState.collectAsStateWithLifecycle()
 
