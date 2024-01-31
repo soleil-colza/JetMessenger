@@ -56,15 +56,9 @@ fun ChatScreen(viewModel: ChatViewModel) {
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(
-                modifier = Modifier.padding(16.dp),
+            BuildSendButton(
                 onClick = { viewModel.sendMessage(inputText) }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Send,
-                    contentDescription = "Send"
-                )
-            }
+            )
         }
     ) { paddingValues ->
 
@@ -81,5 +75,15 @@ fun ChatScreen(viewModel: ChatViewModel) {
                 label = { Text("Type whatever you like 🙌🏻") }
             )
         }
+    }
+}
+
+@Composable
+fun BuildSendButton(onClick : () -> Unit){
+    FloatingActionButton(onClick = onClick) {
+        Icon(
+            imageVector = Icons.Default.Send,
+            contentDescription = "Send"
+        )
     }
 }
