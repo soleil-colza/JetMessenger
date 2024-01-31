@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-val compose_version = "1.4.3"
+val composeVersion = "1.4.3"
 
 android {
     namespace = "com.example.jetmessenger"
@@ -12,6 +12,7 @@ android {
     defaultConfig {
         applicationId = "com.example.jetmessenger"
         minSdk = 24
+        //noinspection OldTargetApi
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -56,7 +57,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "$compose_version"
+        kotlinCompilerExtensionVersion = composeVersion
     }
     packaging {
         resources {
@@ -67,10 +68,9 @@ android {
 
 
 dependencies {
-    val retrofit_version = "2.9.0"
+    val retrofitVersion = "2.9.0"
 
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    androidTestImplementation("androidx.compose.ui:ui-test-manifest")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
@@ -91,12 +91,13 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
     implementation("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:3.8.0")
-    implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.21")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation("androidx.compose.material:material-icons-extended:$compose_version")
+    //noinspection GradleDependency,GradleDependency
+    implementation("androidx.compose.material:material-icons-extended:$composeVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
     testImplementation("junit:junit:4.13.2")
