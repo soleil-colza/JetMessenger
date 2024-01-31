@@ -29,7 +29,7 @@ import com.example.jetmessenger.ui.theme.JetMessengerTheme
 
 class ChatActivity : ComponentActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: ChatViewModel by viewModels()
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,7 @@ class ChatActivity : ComponentActivity() {
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserInputScreen(viewModel: MainViewModel) {
+fun UserInputScreen(viewModel: ChatViewModel) {
 
     val state by viewModel.textState.collectAsStateWithLifecycle()
 
