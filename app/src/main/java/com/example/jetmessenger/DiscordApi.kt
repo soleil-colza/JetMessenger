@@ -22,10 +22,10 @@ interface DiscordWebhook {
     ): Response<Unit>
 }
 
-val logger = HttpLoggingInterceptor()
+val logger: HttpLoggingInterceptor = HttpLoggingInterceptor()
     .setLevel(HttpLoggingInterceptor.Level.BODY)
 
-val httpClient = OkHttpClient.Builder()
+val httpClient: OkHttpClient = OkHttpClient.Builder()
     .addInterceptor(logger)
     .build()
 
