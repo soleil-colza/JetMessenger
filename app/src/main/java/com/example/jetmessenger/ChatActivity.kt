@@ -52,13 +52,13 @@ class ChatActivity : ComponentActivity() {
 @Composable
 fun ChatScreen(viewModel: ChatViewModel) {
 
-    val state by viewModel.textState.collectAsStateWithLifecycle()
+    val inputText by viewModel.textState.collectAsStateWithLifecycle()
 
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(16.dp),
-                onClick = { viewModel.sendMessage(state) }
+                onClick = { viewModel.sendMessage(inputText) }
             ) {
                 Icon(
                     imageVector = Icons.Default.Send,
@@ -76,7 +76,7 @@ fun ChatScreen(viewModel: ChatViewModel) {
         ) {
             TextField(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                value = state,
+                value = inputText,
                 onValueChange = { newText -> viewModel.updateText(newText) },
                 label = { Text("Type whatever you like 🙌🏻") }
             )
