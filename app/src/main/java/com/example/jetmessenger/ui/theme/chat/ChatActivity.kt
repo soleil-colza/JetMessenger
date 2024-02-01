@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.jetmessenger.data.repository.ChatRepository
 import com.example.jetmessenger.data.repository.ChatRepositoryImpl
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
@@ -44,7 +45,7 @@ class ChatActivity : ComponentActivity() {
         setContent {
             JetMessengerTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    ChatScreen(viewModel = viewModel)
+                    ChatScreen()
                 }
             }
         }
@@ -65,7 +66,9 @@ class ChatActivity : ComponentActivity() {
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ChatScreen(viewModel: ChatViewModel) {
+private fun ChatScreen(){
+
+    val viewModel: ChatViewModel = viewModel()
 
     val inputText by viewModel.textState.collectAsStateWithLifecycle()
 
@@ -99,6 +102,7 @@ private fun ChatScreen(viewModel: ChatViewModel) {
     }
 }
 
+
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Preview
 @Composable
@@ -109,7 +113,7 @@ fun PreviewChatScreen() {
     val viewModel = ChatViewModel(repository)
 
     JetMessengerTheme {
-        ChatScreen(viewModel = viewModel)
+        ChatScreen()
     }
 }
 
