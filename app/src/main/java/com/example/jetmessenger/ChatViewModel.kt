@@ -15,6 +15,13 @@ class ChatViewModel : ViewModel() {
     val textState = _textState.asStateFlow()
 
     private val discordWebhook = retrofit.create(DiscordWebhook::class.java)
+
+
+    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+    fun updateText(newText: String) {
+        _textState.value = newText
+    }
+
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     fun sendMessage(newText: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -24,10 +31,7 @@ class ChatViewModel : ViewModel() {
                 webhookId = BuildConfig.WEBHOOK_ID,
                 webhookToken = BuildConfig.WEBHOOK_TOKEN
             )
+            updateText("")
         }
-    }
-    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-    fun updateText(newText: String) {
-        _textState.value = newText
     }
 }
