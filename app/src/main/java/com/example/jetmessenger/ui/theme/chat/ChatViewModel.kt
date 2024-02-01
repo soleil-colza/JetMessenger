@@ -1,21 +1,21 @@
-package com.example.jetmessenger
+package com.example.jetmessenger.ui.theme.chat
 
 import android.os.Build
 import androidx.annotation.RequiresExtension
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.jetmessenger.data.repository.ChatRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ChatViewModel : ViewModel() {
+class ChatViewModel(
+    private val repository: ChatRepository
+) : ViewModel() {
 
     private val _textState = MutableStateFlow("")
     val textState = _textState.asStateFlow()
-
-    private val discordWebhook = retrofit.create(DiscordWebhook::class.java)
-
 
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     fun updateText(newText: String) {
@@ -25,11 +25,7 @@ class ChatViewModel : ViewModel() {
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     fun sendMessage(newText: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            discordWebhook.sendMessage(
-                DiscordMessage(content = newText),
-                webhookId = BuildConfig.WEBHOOK_ID,
-                webhookToken = BuildConfig.WEBHOOK_TOKEN
-            )
+            repository.sendMessage(newText)
             updateText("")
         }
     }
