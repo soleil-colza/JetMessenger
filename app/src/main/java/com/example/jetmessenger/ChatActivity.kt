@@ -47,7 +47,7 @@ class ChatActivity : ComponentActivity() {
         }
     }
 }
-
+// onClick = { viewModel.sendMessage(inputText) }
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,9 +57,15 @@ fun ChatScreen(viewModel: ChatViewModel) {
 
     Scaffold(
         floatingActionButton = {
-            BuildSendButton(
+            FloatingActionButton(
+                modifier = Modifier.padding(16.dp),
                 onClick = { viewModel.sendMessage(inputText) }
-            )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Send,
+                    contentDescription = "Send"
+                )
+            }
         }
     ) { paddingValues ->
 
@@ -79,33 +85,12 @@ fun ChatScreen(viewModel: ChatViewModel) {
     }
 }
 
-@Composable
-fun BuildSendButton(onClick : () -> Unit){
-    FloatingActionButton(onClick = onClick) {
-        Icon(
-            imageVector = Icons.Default.Send,
-            contentDescription = "Send"
-        )
-    }
-}
-
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Preview
 @Composable
 fun PreviewChatScreen() {
-
     val viewModel = ChatViewModel()
-
     JetMessengerTheme {
         ChatScreen(viewModel = viewModel)
     }
 }
-
-@Preview
-@Composable
-fun PreviewBuildSendButton() {
-    BuildSendButton {
-        println("send button clicked")
-    }
-}
-
