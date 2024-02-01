@@ -51,7 +51,7 @@ class ChatActivity : ComponentActivity() {
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChatScreen(viewModel: ChatViewModel) {
+private fun ChatScreen(viewModel: ChatViewModel) {
 
     val inputText by viewModel.textState.collectAsStateWithLifecycle()
 
