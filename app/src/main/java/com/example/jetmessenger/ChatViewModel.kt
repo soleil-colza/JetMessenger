@@ -25,7 +25,6 @@ class ChatViewModel : ViewModel() {
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     fun sendMessage(newText: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _textState.value = newText
             discordWebhook.sendMessage(
                 DiscordMessage(content = newText),
                 webhookId = BuildConfig.WEBHOOK_ID,
