@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
 
-
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
