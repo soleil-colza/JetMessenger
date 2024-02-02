@@ -1,9 +1,11 @@
-package com.example.jetmessenger.data.repository
+package com.example.jetmessenger.data.domain
 
 import com.example.jetmessenger.BuildConfig
-import com.example.jetmessenger.data.api.DiscordMessage
 import com.example.jetmessenger.data.api.DiscordWebhook
 import com.example.jetmessenger.data.api.httpClient
+import com.example.jetmessenger.data.repository.ChatRepository
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -32,3 +34,6 @@ class ChatRepositoryImpl : ChatRepository {
         )
     }
 }
+
+@JsonClass(generateAdapter = true)
+data class DiscordMessage(@field:Json(name = "content") val content: String)

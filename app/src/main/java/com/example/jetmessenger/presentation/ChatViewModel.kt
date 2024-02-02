@@ -1,4 +1,4 @@
-package com.example.jetmessenger.ui.theme.chat
+package com.example.jetmessenger.presentation
 
 import android.os.Build
 import androidx.annotation.RequiresExtension

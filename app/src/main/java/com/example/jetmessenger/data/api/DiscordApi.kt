@@ -1,7 +1,6 @@
 package com.example.jetmessenger.data.api
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.example.jetmessenger.data.domain.DiscordMessage
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -24,7 +23,3 @@ val logger: HttpLoggingInterceptor = HttpLoggingInterceptor()
 val httpClient: OkHttpClient = OkHttpClient.Builder()
     .addInterceptor(logger)
     .build()
-
-
-@JsonClass(generateAdapter = true)
-data class DiscordMessage(@field:Json(name = "content") val content: String)
