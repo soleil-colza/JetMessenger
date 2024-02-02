@@ -102,7 +102,7 @@ private fun ChatScreen(
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Preview
 @Composable
-fun ChatScreenPreview() {
+private fun ChatScreenPreview() {
     JetMessengerTheme {
         ChatScreen(
             textState = "Preview",
