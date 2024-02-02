@@ -18,9 +18,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -44,7 +44,7 @@ class ChatActivity : ComponentActivity() {
                 val textState = viewModel.textState.collectAsStateWithLifecycle()
 
                 ChatScreen(
-                    textState = textState,
+                    textState = textState.value,
                     onUpdateText = viewModel::updateText,
                     onClickFabButton = viewModel::sendMessage,
                 )
@@ -64,7 +64,7 @@ class ChatActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ChatScreen(
-    textState: State<String>,
+    textState: String,
     onUpdateText: (String) -> Unit,
     onClickFabButton: (String) -> Unit,
 ){
@@ -72,7 +72,7 @@ private fun ChatScreen(
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(16.dp),
-                onClick = { onClickFabButton(textState.value) }
+                onClick = { onClickFabButton(textState) }
             ) {
                 Icon(
                     imageVector = Icons.Default.Send,
@@ -90,7 +90,7 @@ private fun ChatScreen(
         ) {
             TextField(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                value = textState.value,
+                value = textState,
                 onValueChange = { onUpdateText(it) },
                 label = { Text("Type whatever you like 🙌🏻") }
             )
@@ -98,7 +98,6 @@ private fun ChatScreen(
     }
 }
 
-/* textStateの型があっておらずエラーが出るので、一旦コメントアウトしてPushします
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Preview
@@ -112,4 +111,3 @@ fun ChatScreenPreview() {
         }
     }
 }
- */
