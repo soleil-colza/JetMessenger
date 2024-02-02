@@ -100,6 +100,12 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:$composeVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
+    val kordVersion = "0.13.0"
+
+    implementation("dev.kord:kord-core:$kordVersion")
+    implementation("dev.kord.kord-api:discord-rest-kotlin:$kordVersion") //これと
+    implementation("dev.kord.kord-api:discord-gateway-kotlin:$kordVersion") //これはいらないかも、要精査
+
     testImplementation("junit:junit:4.13.2")
 
 }
