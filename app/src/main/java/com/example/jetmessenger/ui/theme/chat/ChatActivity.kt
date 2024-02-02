@@ -15,19 +15,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.jetmessenger.data.repository.ChatRepository
 import com.example.jetmessenger.data.repository.ChatRepositoryImpl
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
@@ -44,39 +41,38 @@ class ChatActivity : ComponentActivity() {
 
         setContent {
             JetMessengerTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    ChatScreen()
+                val textState = viewModel.textState.collectAsStateWithLifecycle()
+
+                ChatScreen(
+                    textState = textState,
+                    onUpdateText = viewModel::updateText,
+                    onClickFabButton = viewModel::sendMessage,
+                )
                 }
             }
         }
-    }
 
     inner class ViewModelFactory(
         private val repository: ChatRepository
     ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>) : T {
-            if (modelClass.isAssignableFrom(ChatViewModel::class.java)) {
-                return ChatViewModel(repository) as T
-            }
-            throw IllegalArgumentException()
-        }
+        override fun <T : ViewModel> create(modelClass: Class<T>) =
+            ChatViewModel(repository) as T
     }
 }
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ChatScreen(){
-
-    val viewModel: ChatViewModel = viewModel()
-
-    val inputText by viewModel.textState.collectAsStateWithLifecycle()
-
+private fun ChatScreen(
+    textState: State<String>,
+    onUpdateText: (String) -> Unit,
+    onClickFabButton: (String) -> Unit,
+){
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(16.dp),
-                onClick = { viewModel.sendMessage(inputText) } //　これがいらない？？
+                onClick = { onClickFabButton(textState.value) }
             ) {
                 Icon(
                     imageVector = Icons.Default.Send,
@@ -94,30 +90,26 @@ private fun ChatScreen(){
         ) {
             TextField(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                value = inputText,
-                onValueChange = { newText -> viewModel.updateText(newText) },
+                value = textState.value,
+                onValueChange = { onUpdateText(it) },
                 label = { Text("Type whatever you like 🙌🏻") }
             )
         }
     }
 }
 
+/* textStateの型があっておらずエラーが出るので、一旦コメントアウトしてPushします
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Preview
 @Composable
-fun PreviewChatScreen() {
-
-    val repository = MockChatRepository()
-
-    val viewModel = ChatViewModel(repository)
-
+fun ChatScreenPreview() {
     JetMessengerTheme {
-        ChatScreen()
+        ChatScreen(
+            textState = "Preview",
+            onUpdateText = {}
+        ) {
+        }
     }
 }
-
-class MockChatRepository : ChatRepository {
-    override suspend fun sendMessage(message: String) {
-    }
-}
+ */
