@@ -32,12 +32,13 @@ android {
             )
         }
         debug {
+            val channelId: String by project
+            buildConfigField("String", "channelId", channelId)
+            val token: String by project
+            buildConfigField("String", "token", token)
             val WEBHOOK_URL: String by project
             buildConfigField("String", "WEBHOOK_URL", WEBHOOK_URL)
-            val WEBHOOK_ID: String by project
-            buildConfigField("String", "WEBHOOK_ID", WEBHOOK_ID)
-            val WEBHOOK_TOKEN: String by project
-            buildConfigField("String", "WEBHOOK_TOKEN", WEBHOOK_TOKEN)
+
         }
 
     }
@@ -94,18 +95,13 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.21")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     //noinspection GradleDependency,GradleDependency
     implementation("androidx.compose.material:material-icons-extended:$composeVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
-    val kordVersion = "0.13.0"
-
-    implementation("dev.kord:kord-core:$kordVersion")
-    implementation("dev.kord.kord-api:discord-rest-kotlin:$kordVersion") //これと
-    implementation("dev.kord.kord-api:discord-gateway-kotlin:$kordVersion") //これはいらないかも、要精査
-
     testImplementation("junit:junit:4.13.2")
 
 }
+

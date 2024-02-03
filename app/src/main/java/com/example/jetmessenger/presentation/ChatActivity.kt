@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.jetmessenger.data.domain.ChatRepositoryImpl
+import com.example.jetmessenger.data.ChatRepositoryImpl
 import com.example.jetmessenger.data.repository.ChatRepository
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
 

@@ -1,21 +1,23 @@
-package com.example.jetmessenger.data.domain
+package com.example.jetmessenger.data
 
 import com.example.jetmessenger.BuildConfig
+import com.example.jetmessenger.BuildConfig.WEBHOOK_URL
 import com.example.jetmessenger.data.api.DiscordWebhook
 import com.example.jetmessenger.data.api.httpClient
 import com.example.jetmessenger.data.repository.ChatRepository
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.example.jetmessenger.domain.DiscordMessage
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-
-class ChatRepositoryImpl : ChatRepository {
+class ChatRepositoryImpl(
+    private val channelId: String = BuildConfig.channelId,
+    private val token: String = BuildConfig.token
+) : ChatRepository {
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("https://discord.com/api/")
+        .baseUrl(WEBHOOK_URL)
         .addConverterFactory(
             MoshiConverterFactory.create(
                 Moshi.Builder().add(
@@ -26,15 +28,10 @@ class ChatRepositoryImpl : ChatRepository {
 
     private val discordWebhook = retrofit.create(DiscordWebhook::class.java)
 
-
     override suspend fun sendMessage(message: String) {
         discordWebhook.sendMessage(
             DiscordMessage(content = message),
-            webhookId = BuildConfig.WEBHOOK_ID,
-            webhookToken = BuildConfig.WEBHOOK_TOKEN
+            channelId = BuildConfig.channelId,
         )
     }
 }
-
-@JsonClass(generateAdapter = true)
-data class DiscordMessage(@field:Json(name = "content") val content: String)
