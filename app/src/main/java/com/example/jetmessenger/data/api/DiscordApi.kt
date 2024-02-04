@@ -11,7 +11,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface DiscordBot {
-    @Headers("authorization: Bot ${BuildConfig.botToken}")
+    @Headers("authorization: Bot ${BuildConfig.BOT_TOKEN}")
     @POST("channels/{channelId}/messages")
     suspend fun sendMessage(
         @Path("channelId") channelId: String,
@@ -25,4 +25,3 @@ val logger: HttpLoggingInterceptor = HttpLoggingInterceptor()
 val httpClient: OkHttpClient = OkHttpClient.Builder()
     .addInterceptor(logger)
     .build()
-

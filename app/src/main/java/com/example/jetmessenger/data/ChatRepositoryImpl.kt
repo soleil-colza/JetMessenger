@@ -1,8 +1,9 @@
 package com.example.jetmessenger.data
 
 import android.util.Log
-import com.example.jetmessenger.BuildConfig.baseUrl
-import com.example.jetmessenger.BuildConfig.channelId
+import com.example.jetmessenger.BuildConfig
+import com.example.jetmessenger.BuildConfig.BASE_URL
+import com.example.jetmessenger.BuildConfig.CHANNEL_ID
 import com.example.jetmessenger.data.api.DiscordBot
 import com.example.jetmessenger.data.api.httpClient
 import com.example.jetmessenger.data.repository.ChatRepository
@@ -17,7 +18,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class ChatRepositoryImpl : ChatRepository {
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(baseUrl)
+        .baseUrl(BuildConfig.BASE_URL)
         .addConverterFactory(
             MoshiConverterFactory.create(
                 Moshi.Builder().add(
@@ -37,7 +38,7 @@ class ChatRepositoryImpl : ChatRepository {
             )
 
             try {
-                discordBot.sendMessage(channelId, discordMessage)
+                discordBot.sendMessage(CHANNEL_ID, discordMessage)
             } catch (e: Exception) {
                 Log.e("ChatRepository","Error sending message", e)// エラーハンドリングの処理もっとちゃんとかく
             }
