@@ -2,7 +2,6 @@ package com.example.jetmessenger.data
 
 import com.example.jetmessenger.BuildConfig.baseUrl
 import com.example.jetmessenger.BuildConfig.channelId
-import com.example.jetmessenger.BuildConfig.token
 import com.example.jetmessenger.data.api.DiscordBot
 import com.example.jetmessenger.data.api.httpClient
 import com.example.jetmessenger.data.repository.ChatRepository
@@ -33,7 +32,6 @@ class ChatRepositoryImpl : ChatRepository {
         )
 
         discordBot.sendMessage(
-            token = token,
             channelId = channelId,
             message = discordMessage
         )
