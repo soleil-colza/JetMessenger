@@ -34,8 +34,8 @@ android {
         debug {
             val channelId: String by project
             buildConfigField("String", "channelId", channelId)
-            val token: String by project
-            buildConfigField("String", "token", token)
+            val botToken: String by project
+            buildConfigField("String", "botToken", botToken)
             val baseUrl: String by project
             buildConfigField("String", "baseUrl", baseUrl)
         }
