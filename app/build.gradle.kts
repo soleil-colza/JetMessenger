@@ -36,9 +36,8 @@ android {
             buildConfigField("String", "channelId", channelId)
             val token: String by project
             buildConfigField("String", "token", token)
-            val WEBHOOK_URL: String by project
-            buildConfigField("String", "WEBHOOK_URL", WEBHOOK_URL)
-
+            val baseUrl: String by project
+            buildConfigField("String", "baseUrl", baseUrl)
         }
 
     }

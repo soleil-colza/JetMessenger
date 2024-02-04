@@ -9,10 +9,10 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface DiscordWebhook {
+interface DiscordBot {
     @POST("channels/{channelId}/messages")
     suspend fun sendMessage(
-        @Header("token") token: String,
+        @Header("authorization") token: String,
         @Path("channelId") channelId: String,
         @Body message: DiscordMessage
     ): Response<Unit>

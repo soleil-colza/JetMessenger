@@ -1,10 +1,9 @@
 package com.example.jetmessenger.data
 
-import com.example.jetmessenger.BuildConfig
-import com.example.jetmessenger.BuildConfig.WEBHOOK_URL
+import com.example.jetmessenger.BuildConfig.baseUrl
 import com.example.jetmessenger.BuildConfig.channelId
 import com.example.jetmessenger.BuildConfig.token
-import com.example.jetmessenger.data.api.DiscordWebhook
+import com.example.jetmessenger.data.api.DiscordBot
 import com.example.jetmessenger.data.api.httpClient
 import com.example.jetmessenger.data.repository.ChatRepository
 import com.example.jetmessenger.domain.DiscordMessage
@@ -16,7 +15,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class ChatRepositoryImpl : ChatRepository {
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(WEBHOOK_URL)
+        .baseUrl(baseUrl)
         .addConverterFactory(
             MoshiConverterFactory.create(
                 Moshi.Builder().add(
@@ -25,17 +24,15 @@ class ChatRepositoryImpl : ChatRepository {
         .client(httpClient)
         .build()
 
-    private val discordWebhook = retrofit.create(DiscordWebhook::class.java)
+    private val discordBot = retrofit.create(DiscordBot::class.java)
 
     override suspend fun sendMessage(message: String) {
 
         val discordMessage = DiscordMessage(
-            username = "MyBot",
-            avatarUrl = "https://...",
             content = message
         )
 
-        discordWebhook.sendMessage(
+        discordBot.sendMessage(
             token = token,
             channelId = channelId,
             message = discordMessage
