@@ -27,14 +27,13 @@ import kotlinx.coroutines.Dispatchers
 
 class ChatActivity : ComponentActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val viewModel = ViewModelProvider(
             this,
             ChatViewModel.ChatViewModelFactory(ChatRepositoryImpl(Dispatchers.IO))
         )[ChatViewModel::class.java]
+
 
         setContent {
             JetMessengerTheme {
@@ -86,6 +85,7 @@ private fun ChatScreen(
         }
     }
 }
+
 
 @Preview
 @Composable
