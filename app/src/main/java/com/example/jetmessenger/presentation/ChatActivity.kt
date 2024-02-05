@@ -1,11 +1,8 @@
 package com.example.jetmessenger.presentation
 
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,23 +19,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.jetmessenger.data.ChatRepositoryImpl
-import com.example.jetmessenger.data.repository.ChatRepository
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
 import kotlinx.coroutines.Dispatchers
 
 class ChatActivity : ComponentActivity() {
 
-    private val viewModel: ChatViewModel by viewModels {
-        ViewModelFactory(ChatRepositoryImpl(Dispatchers.IO))
-    }
 
-    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val viewModel = ViewModelProvider(
+            this,
+            ChatViewModel.ChatViewModelFactory(ChatRepositoryImpl(Dispatchers.IO))
+        )[ChatViewModel::class.java]
 
         setContent {
             JetMessengerTheme {
@@ -52,16 +48,8 @@ class ChatActivity : ComponentActivity() {
             }
         }
     }
-
-    inner class ViewModelFactory(
-        private val repository: ChatRepository
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>) =
-            ChatViewModel(repository) as T
-    }
 }
 
-@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ChatScreen(
@@ -85,8 +73,8 @@ private fun ChatScreen(
 
         Box(
             modifier = Modifier
-                    .padding(paddingValues)
-                    .fillMaxSize(),
+                .padding(paddingValues)
+                .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             TextField(
@@ -99,8 +87,6 @@ private fun ChatScreen(
     }
 }
 
-
-@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Preview
 @Composable
 private fun ChatScreenPreview() {
