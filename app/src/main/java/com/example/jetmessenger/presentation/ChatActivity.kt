@@ -28,11 +28,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.jetmessenger.data.ChatRepositoryImpl
 import com.example.jetmessenger.data.repository.ChatRepository
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
+import kotlinx.coroutines.Dispatchers
 
 class ChatActivity : ComponentActivity() {
 
     private val viewModel: ChatViewModel by viewModels {
-        ViewModelFactory(ChatRepositoryImpl())
+        ViewModelFactory(ChatRepositoryImpl(Dispatchers.IO))
     }
 
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
