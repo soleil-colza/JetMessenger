@@ -1,12 +1,11 @@
-package com.example.jetmessenger.data
+package com.example.jetmessenger.data.repository
 
 import android.util.Log
 import com.example.jetmessenger.BuildConfig
 import com.example.jetmessenger.BuildConfig.CHANNEL_ID
+import com.example.jetmessenger.data.DiscordMessage
 import com.example.jetmessenger.data.api.DiscordBot
 import com.example.jetmessenger.data.api.httpClient
-import com.example.jetmessenger.data.repository.ChatRepository
-import com.example.jetmessenger.domain.DiscordMessage
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.CoroutineDispatcher

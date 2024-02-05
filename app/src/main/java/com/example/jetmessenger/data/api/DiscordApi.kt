@@ -1,7 +1,7 @@
 package com.example.jetmessenger.data.api
 
 import com.example.jetmessenger.BuildConfig
-import com.example.jetmessenger.domain.DiscordMessage
+import com.example.jetmessenger.data.DiscordMessage
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response

@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.jetmessenger.data.ChatRepositoryImpl
+import com.example.jetmessenger.data.repository.ChatRepositoryImpl
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
 import kotlinx.coroutines.Dispatchers
 

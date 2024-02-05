@@ -1,4 +1,4 @@
-package com.example.jetmessenger.domain
+package com.example.jetmessenger.data
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
