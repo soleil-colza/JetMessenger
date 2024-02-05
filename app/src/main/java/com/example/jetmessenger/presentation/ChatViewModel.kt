@@ -27,6 +27,7 @@ class ChatViewModel(
             updateText("")
         }
     }
+
     class ChatViewModelFactory(private val repository: ChatRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(ChatViewModel::class.java)) {
