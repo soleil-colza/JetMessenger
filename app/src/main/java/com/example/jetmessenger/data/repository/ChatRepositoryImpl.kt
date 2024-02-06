@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.jetmessenger.BuildConfig
 import com.example.jetmessenger.BuildConfig.CHANNEL_ID
 import com.example.jetmessenger.data.DiscordMessage
-import com.example.jetmessenger.data.api.DiscordBot
+import com.example.jetmessenger.data.api.SendMessageApi
 import com.example.jetmessenger.data.api.httpClient
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -29,7 +29,7 @@ class ChatRepositoryImpl(
         .client(httpClient)
         .build()
 
-    private val discordBot = retrofit.create(DiscordBot::class.java)
+    private val sendMessage = retrofit.create(SendMessageApi::class.java)
 
     override suspend fun sendMessage(message: String) {
         withContext(dispatcher) {
@@ -38,7 +38,7 @@ class ChatRepositoryImpl(
             )
 
             try {
-                discordBot.sendMessage(CHANNEL_ID, discordMessage)
+                sendMessage.sendMessage(CHANNEL_ID, discordMessage)
             } catch (e: Exception) {
                 Log.e("ChatRepository", "Error sending message", e)// エラーハンドリングの処理もっとちゃんとかく
             }

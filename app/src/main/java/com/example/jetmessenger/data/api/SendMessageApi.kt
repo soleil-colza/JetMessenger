@@ -10,7 +10,7 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface DiscordBot {
+interface SendMessageApi {
     @Headers("authorization: Bot ${BuildConfig.BOT_TOKEN}")
     @POST("channels/{channelId}/messages")
     suspend fun sendMessage(
