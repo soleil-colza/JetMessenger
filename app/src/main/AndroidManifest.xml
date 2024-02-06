@@ -15,9 +15,10 @@
         tools:ignore="Instantiatable">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.jetmessenger.presentation.ChatActivity"
             android:exported="true"
-            android:theme="@style/Theme.JetMessenger">
+            android:theme="@style/Theme.JetMessenger"
+            tools:ignore="MissingClass">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

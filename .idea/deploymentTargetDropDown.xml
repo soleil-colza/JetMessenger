@@ -2,6 +2,25 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="PreviewBuildSendButton">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_6_Pro_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-02-01T02:08:17.159785Z" />
+        </State>
+      </entry>
+      <entry key="PreviewChatScreen">
+        <State />
+      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
@@ -15,7 +34,7 @@
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-01-20T04:56:21.031005Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-02-01T02:08:27.910829Z" />
         </State>
       </entry>
     </value>

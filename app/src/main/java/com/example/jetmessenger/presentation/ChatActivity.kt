@@ -1,11 +1,8 @@
-package com.example.jetmessenger
+package com.example.jetmessenger.presentation
 
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,51 +11,56 @@ import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.jetmessenger.data.repository.ChatRepositoryImpl
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
+import kotlinx.coroutines.Dispatchers
 
-class MainActivity : ComponentActivity() {
+class ChatActivity : ComponentActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
-    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val viewModel = ViewModelProvider(
+            this,
+            ChatViewModel.ChatViewModelFactory(ChatRepositoryImpl(Dispatchers.IO))
+        )[ChatViewModel::class.java]
+
 
         setContent {
             JetMessengerTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    UserInputScreen(viewModel = viewModel)
-                }
+                val textState = viewModel.textState.collectAsStateWithLifecycle()
+
+                ChatScreen(
+                    textState = textState.value,
+                    onUpdateText = viewModel::updateText,
+                    onClickFabButton = viewModel::sendMessage,
+                )
             }
         }
     }
 }
 
-@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserInputScreen(viewModel: MainViewModel) {
-
-    val state by viewModel.textState.collectAsStateWithLifecycle()
-
+private fun ChatScreen(
+    textState: String,
+    onUpdateText: (String) -> Unit,
+    onClickFabButton: (String) -> Unit,
+) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(16.dp),
-                onClick = { viewModel.sendMessage(state) }
+                onClick = { onClickFabButton(textState) }
             ) {
                 Icon(
                     imageVector = Icons.Default.Send,
@@ -76,10 +78,23 @@ fun UserInputScreen(viewModel: MainViewModel) {
         ) {
             TextField(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                value = state,
-                onValueChange = { newText -> viewModel.updateText(newText) },
+                value = textState,
+                onValueChange = { onUpdateText(it) },
                 label = { Text("Type whatever you like 🙌🏻") }
             )
         }
+    }
+}
+
+
+@Preview
+@Composable
+private fun ChatScreenPreview() {
+    JetMessengerTheme {
+        ChatScreen(
+            textState = "Preview",
+            onUpdateText = {},
+            onClickFabButton = {}
+        )
     }
 }
