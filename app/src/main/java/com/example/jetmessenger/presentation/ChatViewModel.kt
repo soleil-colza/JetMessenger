@@ -3,13 +3,13 @@ package com.example.jetmessenger.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.jetmessenger.data.repository.ChatRepository
+import com.example.jetmessenger.data.repository.SendMessageRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ChatViewModel(
-    private val repository: ChatRepository
+    private val repository: SendMessageRepository
 ) : ViewModel() {
 
     private val _textState = MutableStateFlow("")
@@ -27,7 +27,7 @@ class ChatViewModel(
             updateText("")
         }
     }
-    class ChatViewModelFactory(private val repository: ChatRepository) : ViewModelProvider.Factory {
+    class ChatViewModelFactory(private val repository: SendMessageRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(ChatViewModel::class.java)) {
                 return ChatViewModel(repository) as T

@@ -13,9 +13,9 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class ChatRepositoryImpl(
+class SendMessageRepositoryImpl(
     private val dispatcher: CoroutineDispatcher
-) : ChatRepository {
+) : SendMessageRepository {
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.BASE_URL)
