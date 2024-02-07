@@ -1,40 +1,42 @@
 package com.example.jetmessenger.presentation
 
+import android.os.Message
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.jetmessenger.data.repository.GetMessagesRepository
 import com.example.jetmessenger.data.repository.SendMessageRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ChatViewModel(
-    private val repository: SendMessageRepository
+    private val sendMessageRepository: SendMessageRepository,
+    private val getMessageRepository: GetMessagesRepository
 ) : ViewModel() {
 
     private val _textState = MutableStateFlow("")
     val textState = _textState.asStateFlow()
 
+    private val _messages = MutableLiveData<List<Message>>()
+    val messages: LiveData<List<Message>> = _messages
+
     fun updateText(newText: String) {
-        viewModelScope.launch {
-            _textState.value = newText
-        }
+        _textState.value = newText
     }
 
     fun sendMessage(newText: String) {
         viewModelScope.launch {
-            repository.sendMessage(newText)
+            sendMessageRepository.sendMessage(newText)
             updateText("")
         }
     }
-    class ChatViewModelFactory(private val repository: SendMessageRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(ChatViewModel::class.java)) {
-                return ChatViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
+
+    init {
+        viewModelScope.launch {
+            val messages = getMessageRepository.getMessages()
+            _messages.postValue(messages)
         }
     }
-
-
 }

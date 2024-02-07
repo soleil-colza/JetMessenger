@@ -2,6 +2,8 @@ package com.example.jetmessenger.data.api
 
 import com.example.jetmessenger.BuildConfig
 import com.example.jetmessenger.data.DiscordMessage
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
@@ -15,4 +17,12 @@ interface SendMessageApi {
         @Path("channelId") channelId: String,
         @Body message: DiscordMessage
     ): Response<Unit>
+
 }
+
+val logger: HttpLoggingInterceptor = HttpLoggingInterceptor()
+    .setLevel(HttpLoggingInterceptor.Level.BODY)
+
+val httpClient: OkHttpClient = OkHttpClient.Builder()
+    .addInterceptor(logger)
+    .build()

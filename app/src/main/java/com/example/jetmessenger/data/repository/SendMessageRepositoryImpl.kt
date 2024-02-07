@@ -1,6 +1,9 @@
 package com.example.jetmessenger.data.repository
 
+import android.net.http.HttpException
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresExtension
 import com.example.jetmessenger.BuildConfig
 import com.example.jetmessenger.BuildConfig.CHANNEL_ID
 import com.example.jetmessenger.data.DiscordMessage
@@ -12,6 +15,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.IOException
 
 class SendMessageRepositoryImpl(
     private val dispatcher: CoroutineDispatcher
@@ -29,8 +33,17 @@ class SendMessageRepositoryImpl(
         .client(httpClient)
         .build()
 
-    private val sendMessage = retrofit.create(SendMessageApi::class.java)
+    private val sendMessageApi: SendMessageApi = retrofit.newBuilder()
+        .client(httpClient.newBuilder().addInterceptor { chain ->
+            val request = chain.request().newBuilder()
+                .addHeader("authorization", "Bot ${BuildConfig.BOT_TOKEN}")
+                .build()
+            chain.proceed(request)
+        }.build())
+        .build()
+        .create(SendMessageApi::class.java)
 
+    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override suspend fun sendMessage(message: String) {
         withContext(dispatcher) {
             val discordMessage = DiscordMessage(
@@ -38,9 +51,13 @@ class SendMessageRepositoryImpl(
             )
 
             try {
-                sendMessage.sendMessage(CHANNEL_ID, discordMessage)
+                sendMessageApi.sendMessage(CHANNEL_ID, discordMessage)
+            } catch (e: IOException) {
+                Log.e("SendMessageRepository", "Network error", e)
+            } catch (e: HttpException) {
+                Log.e("SendMessageRepository", "HTTP error")
             } catch (e: Exception) {
-                Log.e("ChatRepository", "Error sending message", e)// エラーハンドリングの処理もっとちゃんとかく
+                Log.e("SendMessageRepository", "Error sending message", e)
             }
         }
     }

@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-val composeVersion = "1.4.3"
+val compose_version = "1.4.3"
 
 android {
     namespace = "com.example.jetmessenger"
@@ -57,7 +57,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = composeVersion
+        kotlinCompilerExtensionVersion = compose_version
     }
     packaging {
         resources {
@@ -68,6 +68,7 @@ android {
 
 
 dependencies {
+    implementation("com.google.ai.client.generativeai:generativeai:0.1.2")
     val retrofitVersion = "2.9.0"
 
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
@@ -77,6 +78,8 @@ dependencies {
 
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation("androidx.compose.ui:ui:$compose_version")
+    implementation("androidx.compose.runtime:runtime-livedata:$compose_version")
 
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.compose.material3:material3")
@@ -97,7 +100,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     //noinspection GradleDependency,GradleDependency
-    implementation("androidx.compose.material:material-icons-extended:$composeVersion")
+    implementation("androidx.compose.material:material-icons-extended:$compose_version")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
     testImplementation("junit:junit:4.13.2")
