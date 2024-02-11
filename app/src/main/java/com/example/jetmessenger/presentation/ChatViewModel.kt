@@ -9,6 +9,7 @@ import com.example.jetmessenger.data.ReceivedMessage
 import com.example.jetmessenger.data.repository.GetMessagesRepository
 import com.example.jetmessenger.data.repository.SendMessageRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -20,8 +21,8 @@ class ChatViewModel(
     private val _textState = MutableStateFlow("")
     val textState = _textState.asStateFlow()
 
-    private val _messages = MutableLiveData<List<ReceivedMessage>>()
-    val messages: LiveData<List<ReceivedMessage>> = _messages
+    private val _messages = MutableStateFlow<List<ReceivedMessage>>(emptyList())
+    val messages: StateFlow<List<ReceivedMessage>> = _messages
 
     fun updateText(newText: String) {
         _textState.value = newText
