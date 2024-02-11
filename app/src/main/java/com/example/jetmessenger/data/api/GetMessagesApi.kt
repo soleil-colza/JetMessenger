@@ -1,7 +1,7 @@
 
-import android.os.Message
 import com.example.jetmessenger.BuildConfig
 import com.example.jetmessenger.BuildConfig.BASE_URL
+import com.example.jetmessenger.data.ReceivedMessage
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -13,7 +13,7 @@ interface GetMessagesApi {
     @GET("/messages")
     suspend fun getMessages(
         @Path("channelId") channelId: String
-    ): List<Message>
+    ): List<ReceivedMessage>
 
 }
 

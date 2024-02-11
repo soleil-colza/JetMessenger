@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.jetmessenger.data.ReceivedMessage
 import com.example.jetmessenger.data.repository.GetMessagesRepository
 import com.example.jetmessenger.data.repository.SendMessageRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,8 +20,8 @@ class ChatViewModel(
     private val _textState = MutableStateFlow("")
     val textState = _textState.asStateFlow()
 
-    private val _messages = MutableLiveData<List<Message>>()
-    val messages: LiveData<List<Message>> = _messages
+    private val _messages = MutableLiveData<List<ReceivedMessage>>()
+    val messages: LiveData<List<ReceivedMessage>> = _messages
 
     fun updateText(newText: String) {
         _textState.value = newText

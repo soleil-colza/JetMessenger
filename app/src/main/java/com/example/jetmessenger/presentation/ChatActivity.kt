@@ -35,12 +35,12 @@ class ChatActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val sendMessageRepository = SendMessageRepositoryImpl(Dispatchers.IO)
-        val getMessagesRepository = GetMessagesRepositoryImpl(Dispatchers.IO, api)
-
         val viewModel = ViewModelProvider(
             this,
-            ChatViewModelFactory(sendMessageRepository, getMessagesRepository)
+            ChatViewModelFactory(
+                SendMessageRepositoryImpl(Dispatchers.IO),
+                GetMessagesRepositoryImpl(Dispatchers.IO, api)
+            )
         ).get(ChatViewModel::class.java)
 
         setContent {
@@ -110,7 +110,6 @@ private fun ChatScreen(
 fun MessageCard(message: String) {
     Text(text = message)
 }
-
 
 @Preview
 @Composable

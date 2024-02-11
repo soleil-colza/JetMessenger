@@ -7,6 +7,7 @@ import androidx.annotation.RequiresExtension
 import com.example.jetmessenger.BuildConfig
 import com.example.jetmessenger.BuildConfig.CHANNEL_ID
 import com.example.jetmessenger.data.DiscordMessage
+import com.example.jetmessenger.data.ReceivedMessage
 import com.example.jetmessenger.data.api.SendMessageApi
 import com.example.jetmessenger.data.api.httpClient
 import com.squareup.moshi.Moshi
@@ -46,18 +47,19 @@ class SendMessageRepositoryImpl(
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override suspend fun sendMessage(message: String) {
         withContext(dispatcher) {
-            val discordMessage = DiscordMessage(
-                content = message
+            val receivedMessage = ReceivedMessage(
+                content = message,
+                sender = "YourName", // 送信者の名前を指定
+                timestamp = System.currentTimeMillis()
             )
-
             try {
-                sendMessageApi.sendMessage(CHANNEL_ID, discordMessage)
+                sendMessageApi.sendMessage(CHANNEL_ID, receivedMessage)
             } catch (e: IOException) {
-                Log.e("SendMessageRepository", "Network error", e)
+                Log.e("SendMessageRepository", "Networkエラー", e)
             } catch (e: HttpException) {
-                Log.e("SendMessageRepository", "HTTP error")
+                Log.e("SendMessageRepository", "HTTPエラー")
             } catch (e: Exception) {
-                Log.e("SendMessageRepository", "Error sending message", e)
+                Log.e("SendMessageRepository", "送信失敗", e)
             }
         }
     }
