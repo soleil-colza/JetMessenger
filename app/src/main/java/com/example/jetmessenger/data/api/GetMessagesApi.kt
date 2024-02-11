@@ -1,6 +1,7 @@
 
 import android.os.Message
 import com.example.jetmessenger.BuildConfig
+import com.example.jetmessenger.BuildConfig.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -17,7 +18,7 @@ interface GetMessagesApi {
 }
 
 val retrofit = Retrofit.Builder()
-    .baseUrl("https://example.com")
+    .baseUrl(BASE_URL)
     .addConverterFactory(MoshiConverterFactory.create())
     .build()
 
