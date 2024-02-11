@@ -1,8 +1,5 @@
 package com.example.jetmessenger.presentation
 
-import android.os.Message
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jetmessenger.data.ReceivedMessage
@@ -38,7 +35,7 @@ class ChatViewModel(
     init {
         viewModelScope.launch {
             val messages = getMessageRepository.getMessages()
-            _messages.postValue(messages)
+            _messages.value = messages
         }
     }
 }
