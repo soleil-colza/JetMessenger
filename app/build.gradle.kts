@@ -102,6 +102,7 @@ dependencies {
     //noinspection GradleDependency,GradleDependency
     implementation("androidx.compose.material:material-icons-extended:$compose_version")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 
     testImplementation("junit:junit:4.13.2")
 

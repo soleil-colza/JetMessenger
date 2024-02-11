@@ -21,6 +21,12 @@ class ChatViewModel(
     private val _messages = MutableStateFlow<List<ReceivedMessage>>(emptyList())
     val messages: StateFlow<List<ReceivedMessage>> = _messages
 
+    fun fetchMessages() {
+        viewModelScope.launch {
+            _messages.value = getMessageRepository.getMessages()
+        }
+    }
+
     fun updateText(newText: String) {
         _textState.value = newText
     }
@@ -29,6 +35,7 @@ class ChatViewModel(
         viewModelScope.launch {
             sendMessageRepository.sendMessage(newText)
             updateText("")
+            fetchMessages()
         }
     }
 

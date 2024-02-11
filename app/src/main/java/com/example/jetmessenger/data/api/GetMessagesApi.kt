@@ -10,7 +10,7 @@ import retrofit2.http.Path
 
 interface GetMessagesApi {
     @Headers("authorization: Bot ${BuildConfig.BOT_TOKEN}")
-    @GET("/messages")
+    @GET("/channels/{channelId}/messages")
     suspend fun getMessages(
         @Path("channelId") channelId: String
     ): List<ReceivedMessage>

@@ -1,13 +1,13 @@
 package com.example.jetmessenger.presentation
 
 import android.os.Bundle
-import android.os.Message
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,7 +17,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,7 +52,6 @@ class ChatActivity : ComponentActivity() {
                     textState = textState.value,
                     onUpdateText = viewModel::updateText,
                     onClickFabButton = viewModel::sendMessage,
-                    messages = emptyList(),
                     viewModel = viewModel
                 )
             }
@@ -61,14 +61,18 @@ class ChatActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ChatScreen(
+fun ChatScreen(
     textState: String,
     onUpdateText: (String) -> Unit,
     onClickFabButton: (String) -> Unit,
-    messages: List<Message>,
     viewModel: ChatViewModel
 ) {
-    val messagesState = viewModel.messages.observeAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchMessages()
+    }
+
+    val messagesState = viewModel.messages.collectAsState()
 
     Scaffold(
         floatingActionButton = {
@@ -91,11 +95,11 @@ private fun ChatScreen(
             contentAlignment = Alignment.Center
         ) {
             LazyColumn {
-                items(messagesState.value?.size ?: 0) { index ->
-                    MessageCard(messagesState.value?.get(index)?.toString() ?: "Default Message")
-
+                items(messagesState.value) { message ->
+                    MessageCard(message.toString() ?: "Default Message")
                 }
             }
+
             TextField(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 value = textState,
@@ -105,6 +109,8 @@ private fun ChatScreen(
         }
     }
 }
+
+
 
 @Composable
 fun MessageCard(message: String) {
@@ -119,7 +125,6 @@ private fun ChatScreenPreview() {
             textState = "Preview",
             onUpdateText = {},
             onClickFabButton = {},
-            messages = emptyList(),
             viewModel = ChatViewModel(
                 SendMessageRepositoryImpl(Dispatchers.IO),
                 GetMessagesRepositoryImpl(Dispatchers.IO, api)
