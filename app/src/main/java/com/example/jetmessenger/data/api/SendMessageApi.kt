@@ -1,7 +1,7 @@
 package com.example.jetmessenger.data.api
 
 import com.example.jetmessenger.BuildConfig
-import com.example.jetmessenger.data.ReceivedMessage
+import com.example.jetmessenger.data.DiscordMessage
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -15,7 +15,7 @@ interface SendMessageApi {
     @POST("channels/{channelId}/messages")
     suspend fun sendMessage(
         @Path("channelId") channelId: String,
-        @Body message: ReceivedMessage
+        @Body message: DiscordMessage
     ): Response<Unit>
 
 }

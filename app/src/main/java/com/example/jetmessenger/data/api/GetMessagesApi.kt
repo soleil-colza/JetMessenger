@@ -7,12 +7,14 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface GetMessagesApi {
     @Headers("authorization: Bot ${BuildConfig.BOT_TOKEN}")
     @GET("/channels/{channelId}/messages")
     suspend fun getMessages(
-        @Path("channelId") channelId: String
+        @Path("channelId") channelId: String,
+        @Query("limit") limit: Int = 10
     ): List<ReceivedMessage>
 
 }
