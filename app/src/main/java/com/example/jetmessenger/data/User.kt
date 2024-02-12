@@ -1,7 +1,10 @@
 package com.example.jetmessenger.data
 
+import com.squareup.moshi.Json
+
 data class User(
-    val id: String,
+    @Json(name = "id")
+    val userId: String,
     val username: String,
     val discriminator: String,
 )

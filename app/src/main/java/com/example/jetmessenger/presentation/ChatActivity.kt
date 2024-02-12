@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import api
+import com.example.jetmessenger.data.ReceivedMessage
 import com.example.jetmessenger.data.repository.GetMessagesRepositoryImpl
 import com.example.jetmessenger.data.repository.SendMessageRepositoryImpl
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
@@ -96,7 +98,7 @@ fun ChatScreen(
         ) {
             LazyColumn {
                 items(messagesState.value) { message ->
-                    MessageCard(message.toString() ?: "Default Message")
+                    MessageCard(message = message)
                 }
             }
 
@@ -113,8 +115,13 @@ fun ChatScreen(
 
 
 @Composable
-fun MessageCard(message: String) {
-    Text(text = message)
+fun MessageCard(message: ReceivedMessage) {
+    Column {
+        Text(text = "Message ID: ${message.id}")
+        Text(text = "Channel ID: ${message.channelId}")
+        Text(text = "Author: ${message.author.username}")
+        Text(text = "Content: ${message.content}")
+    }
 }
 
 @Preview
