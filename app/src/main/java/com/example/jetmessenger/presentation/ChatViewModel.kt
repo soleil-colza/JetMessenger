@@ -18,7 +18,7 @@ class ChatViewModel(
     private val _uiState = MutableStateFlow(ChatUiState())
     val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
 
-    fun fetchMessages() {
+    private fun fetchMessages() {
         viewModelScope.launch {
             val messages = getMessagesRepository.getMessages()
             _uiState.value = _uiState.value.copy(messages = messages)

@@ -123,7 +123,7 @@ fun MessageCard(message: ReceivedMessage) {
             .background(Color(0xFFC0C8DC))
     ) {
         Text(
-            text = "👤　${message.author}",
+            text = "👤　${message.author.username}",
             modifier = Modifier.padding(4.dp)
         )
         Text(
