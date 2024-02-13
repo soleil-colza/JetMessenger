@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class ChatViewModel(
     private val sendMessageRepository: SendMessageRepository,
-    private val getMessageRepository: GetMessagesRepository
+    private val getMessagesRepository: GetMessagesRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ChatUiState())
@@ -20,7 +20,7 @@ class ChatViewModel(
 
     fun fetchMessages() {
         viewModelScope.launch {
-            val messages = getMessageRepository.getMessages()
+            val messages = getMessagesRepository.getMessages()
             _uiState.value = _uiState.value.copy(messages = messages)
         }
     }
