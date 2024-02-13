@@ -18,8 +18,8 @@ class ChatViewModel(
     private val _textState = MutableStateFlow("")
     val textState = _textState.asStateFlow()
 
-    private val _messages = MutableStateFlow<List<ReceivedMessage>>(emptyList())
-    val messages: StateFlow<List<ReceivedMessage>> = _messages
+    private val _messages = MutableStateFlow(emptyArray<ReceivedMessage>())
+    val messages: StateFlow<Array<ReceivedMessage>> = _messages
 
     fun fetchMessages() {
         viewModelScope.launch {

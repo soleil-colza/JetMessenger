@@ -12,7 +12,7 @@ class GetMessagesRepositoryImpl(
     private val getMessagesApi: GetMessagesApi
 ) : GetMessagesRepository {
 
-    override suspend fun getMessages(): List<ReceivedMessage> {
+    override suspend fun getMessages(): Array<ReceivedMessage> {
         return try {
             val channelId = CHANNEL_ID
             val messages = withContext(coroutineDispatcher) {
@@ -22,7 +22,7 @@ class GetMessagesRepositoryImpl(
             messages
         } catch (e: Exception) {
             Log.e("GetMessagesRepository", "Error fetching messages", e)
-            emptyList()
+            emptyArray<ReceivedMessage>()
         }
     }
 }

@@ -17,7 +17,7 @@ interface GetMessagesApi {
     suspend fun getMessages(
         @Path("channelId") channelId: String,
         @Query("limit") limit: Int = 10
-    ): List<ReceivedMessage>
+    ): Array<ReceivedMessage>
 
 }
 
