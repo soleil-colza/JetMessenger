@@ -108,6 +108,7 @@ fun ChatScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 20.dp, bottom = 72.dp),
+                reverseLayout = true
             ) {
                 items(messagesState.value) { message ->
                     MessageCard(message = message)
