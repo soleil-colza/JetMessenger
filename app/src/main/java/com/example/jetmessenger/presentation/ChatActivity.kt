@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -103,7 +104,7 @@ fun ChatScreen(
                     modifier = Modifier
                         .padding(start = 20.dp, bottom = 16.dp)
                         .align(Alignment.BottomStart),
-                    colors = TextFieldDefaults.textFieldColors(Color(0xFF2E3A59)),
+                    colors = TextFieldDefaults.textFieldColors(Color(0xFF2E3A59)), //色適用されてない気がする・・・
                     value = uiState.inputText,
                     onValueChange = { onUpdateText(it) },
                     label = { Text("入力してね 🙌🏻") }
@@ -124,15 +125,18 @@ fun MessageCard(message: ReceivedMessage) {
     ) {
         Text(
             text = "👤　${message.author.username}",
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier.padding(4.dp),
+            style = TextStyle(color = Color(0xFF2E3A59)) // どの色を使うかまた考える。一旦これ
         )
         Text(
             text = "✉️　${message.content}",
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier.padding(4.dp),
+            style = TextStyle(color = Color(0xFF2E3A59))
         )
         Text(
             text = "🕰　${message.timestamp}",
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier.padding(4.dp),
+            style = TextStyle(color = Color(0xFF2E3A59))
         )
     }
 }
