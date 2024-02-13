@@ -15,13 +15,16 @@ class ChatViewModel(
     private val getMessagesRepository: GetMessagesRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ChatUiState())
+    private val _uiState = MutableStateFlow(ChatUiState(isLoading = false))
     val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
 
     private fun fetchMessages() {
+        // メッセージを取得中の状態にする
+        _uiState.value = _uiState.value.copy(isLoading = true)
+
         viewModelScope.launch {
             val messages = getMessagesRepository.getMessages()
-            _uiState.value = _uiState.value.copy(messages = messages)
+            _uiState.value = _uiState.value.copy(messages = messages, isLoading = false)
         }
     }
 

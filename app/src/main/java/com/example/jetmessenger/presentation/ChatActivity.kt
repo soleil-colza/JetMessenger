@@ -145,7 +145,7 @@ fun MessageCard(message: ReceivedMessage) {
 @Preview
 @Composable
 private fun ChatScreenPreview() {
-    val uiState = ChatUiState(inputText = "Preview")
+    val uiState = ChatUiState(inputText = "Preview", messages = emptyArray(), isLoading = false)
     JetMessengerTheme {
         ChatScreen(
             uiState = uiState,
@@ -154,3 +154,5 @@ private fun ChatScreenPreview() {
         }
     }
 }
+
+
