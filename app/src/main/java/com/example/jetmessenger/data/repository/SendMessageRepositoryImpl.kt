@@ -18,7 +18,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.IOException
 
 class SendMessageRepositoryImpl(
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    api: SendMessageApi
 ) : SendMessageRepository {
 
     private val retrofit: Retrofit = Retrofit.Builder()

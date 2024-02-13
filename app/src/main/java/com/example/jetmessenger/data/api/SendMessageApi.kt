@@ -4,6 +4,7 @@ import com.example.jetmessenger.BuildConfig
 import com.example.jetmessenger.data.DiscordMessage
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
@@ -19,6 +20,8 @@ interface SendMessageApi {
     ): Response<Unit>
 
 }
+
+val sendMessageApi: SendMessageApi = retrofit.create(SendMessageApi::class.java)
 
 val logger: HttpLoggingInterceptor = HttpLoggingInterceptor()
     .setLevel(HttpLoggingInterceptor.Level.BODY)

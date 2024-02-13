@@ -31,11 +31,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import api
 import com.example.jetmessenger.data.ReceivedMessage
+import com.example.jetmessenger.data.api.sendMessageApi
 import com.example.jetmessenger.data.repository.GetMessagesRepositoryImpl
 import com.example.jetmessenger.data.repository.SendMessageRepositoryImpl
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
+import getMessagesApi
 import kotlinx.coroutines.Dispatchers
 
 class ChatActivity : ComponentActivity() {
@@ -46,8 +47,8 @@ class ChatActivity : ComponentActivity() {
         val viewModel = ViewModelProvider(
             this,
             ChatViewModelFactory(
-                SendMessageRepositoryImpl(Dispatchers.IO),
-                GetMessagesRepositoryImpl(Dispatchers.IO, api)
+                SendMessageRepositoryImpl(Dispatchers.IO, sendMessageApi),
+                GetMessagesRepositoryImpl(Dispatchers.IO, getMessagesApi)
             )
         ).get(ChatViewModel::class.java)
 
@@ -161,8 +162,8 @@ private fun ChatScreenPreview() {
             onUpdateText = {},
             onClickFabButton = {},
             viewModel = ChatViewModel(
-                SendMessageRepositoryImpl(Dispatchers.IO),
-                GetMessagesRepositoryImpl(Dispatchers.IO, api)
+                SendMessageRepositoryImpl(Dispatchers.IO, sendMessageApi),
+                GetMessagesRepositoryImpl(Dispatchers.IO, getMessagesApi)
             )
         )
     }
