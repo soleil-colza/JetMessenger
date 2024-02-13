@@ -2,7 +2,7 @@ package com.example.jetmessenger.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.jetmessenger.data.ReceivedMessage
+import com.example.jetmessenger.data.ChatUiState
 import com.example.jetmessenger.data.repository.GetMessagesRepository
 import com.example.jetmessenger.data.repository.SendMessageRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,20 +15,18 @@ class ChatViewModel(
     private val getMessageRepository: GetMessagesRepository
 ) : ViewModel() {
 
-    private val _textState = MutableStateFlow("")
-    val textState = _textState.asStateFlow()
-
-    private val _messages = MutableStateFlow(emptyArray<ReceivedMessage>())
-    val messages: StateFlow<Array<ReceivedMessage>> = _messages
+    private val _uiState = MutableStateFlow(ChatUiState())
+    val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
 
     fun fetchMessages() {
         viewModelScope.launch {
-            _messages.value = getMessageRepository.getMessages()
+            val messages = getMessageRepository.getMessages()
+            _uiState.value = _uiState.value.copy(messages = messages)
         }
     }
 
     fun updateText(newText: String) {
-        _textState.value = newText
+        _uiState.value = _uiState.value.copy(inputText = newText)
     }
 
     fun sendMessage(newText: String) {
@@ -40,9 +38,6 @@ class ChatViewModel(
     }
 
     init {
-        viewModelScope.launch {
-            val messages = getMessageRepository.getMessages()
-            _messages.value = messages
-        }
+        fetchMessages()
     }
 }

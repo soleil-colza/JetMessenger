@@ -6,7 +6,7 @@ data class ReceivedMessage(
     val id: String,
     @Json(name = "channel_id")
     val channelId: String,
-    val author: User,
+    val author: String,
     val content: String,
     val timestamp: String,
 )

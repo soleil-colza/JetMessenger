@@ -22,7 +22,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.jetmessenger.data.ChatUiState
 import com.example.jetmessenger.data.ReceivedMessage
 import com.example.jetmessenger.data.api.sendMessageApi
 import com.example.jetmessenger.data.repository.GetMessagesRepositoryImpl
@@ -54,14 +54,15 @@ class ChatActivity : ComponentActivity() {
 
         setContent {
             JetMessengerTheme {
-                val textState = viewModel.textState.collectAsStateWithLifecycle()
+                val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
                 ChatScreen(
-                    textState = textState.value,
-                    onUpdateText = viewModel::updateText,
+                    uiState = uiState.value,
+                    onUpdateText = { newText -> viewModel.updateText(newText) },
                     onClickFabButton = viewModel::sendMessage,
                     viewModel = viewModel
                 )
+
             }
         }
     }
@@ -70,7 +71,7 @@ class ChatActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatScreen(
-    textState: String,
+    uiState: ChatUiState,
     onUpdateText: (String) -> Unit,
     onClickFabButton: (String) -> Unit,
     viewModel: ChatViewModel
@@ -80,12 +81,13 @@ fun ChatScreen(
         viewModel.fetchMessages()
     }
 
-    val messagesState = viewModel.messages.collectAsState()
+    val messagesState = viewModel.uiState.collectAsStateWithLifecycle().value.messages
+
 
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { onClickFabButton(textState) },
+                onClick = { onClickFabButton(uiState.inputText) },
                 containerColor = Color(0xFF2E3A59)
             ) {
                 Icon(
@@ -110,7 +112,7 @@ fun ChatScreen(
                     .padding(top = 20.dp, bottom = 72.dp),
                 reverseLayout = true
             ) {
-                items(messagesState.value) { message ->
+                items(messagesState) { message ->
                     MessageCard(message = message)
                 }
             }
@@ -120,7 +122,7 @@ fun ChatScreen(
                     .padding(start = 20.dp, bottom = 16.dp)
                     .align(Alignment.BottomStart),
                 colors = TextFieldDefaults.textFieldColors(Color(0xFF2E3A59)), //適用されてない気がする
-                value = textState,
+                value = uiState.inputText,
                 onValueChange = { onUpdateText(it) },
                 label = { Text("入力してね 🙌🏻") }
             )
@@ -139,7 +141,7 @@ fun MessageCard(message: ReceivedMessage) {
             .background(Color(0xFFC0C8DC))
     ) {
         Text(
-            text = "👤　${message.author.username}",
+            text = "👤　${message.author}",
             modifier = Modifier.padding(4.dp)
         )
         Text(
@@ -157,9 +159,10 @@ fun MessageCard(message: ReceivedMessage) {
 @Preview
 @Composable
 private fun ChatScreenPreview() {
+    val uiState = ChatUiState(inputText = "Preview")
     JetMessengerTheme {
         ChatScreen(
-            textState = "Preview",
+            uiState = uiState,
             onUpdateText = {},
             onClickFabButton = {},
             viewModel = ChatViewModel(

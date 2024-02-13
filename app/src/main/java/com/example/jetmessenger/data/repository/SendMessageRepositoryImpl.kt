@@ -19,7 +19,7 @@ import java.io.IOException
 
 class SendMessageRepositoryImpl(
     private val dispatcher: CoroutineDispatcher,
-    api: SendMessageApi
+    sendMessageApi: SendMessageApi
 ) : SendMessageRepository {
 
     private val retrofit: Retrofit = Retrofit.Builder()
