@@ -69,6 +69,7 @@ android {
 
 dependencies {
     implementation("com.google.ai.client.generativeai:generativeai:0.1.2")
+    implementation("androidx.compose.foundation:foundation-layout-android:1.6.1")
     val retrofitVersion = "2.9.0"
 
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")

@@ -9,10 +9,5 @@ data class ReceivedMessage(
     val author: User,
     val content: String,
     val timestamp: String,
-    val resolved: Resolved?
-    )
-
-data class Resolved(
-    @Json(name = "users")
-    val resolvedUsers: Map<String,User>?
 )
+
