@@ -1,40 +1,46 @@
 package com.example.jetmessenger.presentation
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.jetmessenger.data.repository.ChatRepository
+import com.example.jetmessenger.data.ChatUiState
+import com.example.jetmessenger.data.repository.GetMessagesRepository
+import com.example.jetmessenger.data.repository.SendMessageRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ChatViewModel(
-    private val repository: ChatRepository
+    private val sendMessageRepository: SendMessageRepository,
+    private val getMessagesRepository: GetMessagesRepository
 ) : ViewModel() {
 
-    private val _textState = MutableStateFlow("")
-    val textState = _textState.asStateFlow()
+    private val _uiState = MutableStateFlow(ChatUiState(isLoading = false))
+    val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
+
+    private fun fetchMessages() {
+        // メッセージを取得中の状態にする
+        _uiState.value = _uiState.value.copy(isLoading = true)
+
+        viewModelScope.launch {
+            val messages = getMessagesRepository.getMessages()
+            _uiState.value = _uiState.value.copy(messages = messages, isLoading = false)
+        }
+    }
 
     fun updateText(newText: String) {
-        viewModelScope.launch {
-            _textState.value = newText
-        }
+        _uiState.value = _uiState.value.copy(inputText = newText)
     }
 
     fun sendMessage(newText: String) {
         viewModelScope.launch {
-            repository.sendMessage(newText)
+            sendMessageRepository.sendMessage(newText)
             updateText("")
-        }
-    }
-    class ChatViewModelFactory(private val repository: ChatRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(ChatViewModel::class.java)) {
-                return ChatViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
+            fetchMessages()
         }
     }
 
-
+    init {
+        fetchMessages()
+    }
 }

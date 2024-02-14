@@ -1,5 +1,5 @@
 package com.example.jetmessenger.data.repository
 
-interface ChatRepository {
+interface SendMessageRepository {
     suspend fun sendMessage(message: String)
 }
