@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.jetmessenger.data.ChatUiState
 import com.example.jetmessenger.data.repository.GetMessagesRepository
 import com.example.jetmessenger.data.repository.SendMessageRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,10 +20,11 @@ class ChatViewModel(
     val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
 
     private fun fetchMessages() {
-        // メッセージを取得中の状態にする
+
         _uiState.value = _uiState.value.copy(isLoading = true)
 
         viewModelScope.launch {
+            delay(3000)
             val messages = getMessagesRepository.getMessages()
             _uiState.value = _uiState.value.copy(messages = messages, isLoading = false)
         }

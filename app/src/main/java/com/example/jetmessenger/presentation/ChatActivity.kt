@@ -96,7 +96,11 @@ fun ChatScreen(
                     reverseLayout = true
                 ) {
                     items(uiState.messages) { message ->
-                        MessageCard(message = message)
+                        if (uiState.isLoading) {
+                            MessageCardPlaceholder()
+                        } else {
+                            MessageCard(message = message)
+                        }
                     }
                 }
 
@@ -141,7 +145,17 @@ fun MessageCard(message: ReceivedMessage) {
     }
 }
 
-
+@Composable
+fun MessageCardPlaceholder() {
+    Box(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxSize()
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color(0xFFC0C8DC))
+            .skeleton()
+    )
+}
 @Preview
 @Composable
 private fun ChatScreenPreview() {
