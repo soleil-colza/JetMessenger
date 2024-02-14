@@ -7,9 +7,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
@@ -95,10 +96,13 @@ fun ChatScreen(
                         .padding(top = 20.dp, bottom = 72.dp),
                     reverseLayout = true
                 ) {
-                    items(uiState.messages) { message ->
-                        if (uiState.isLoading) {
+                    if (uiState.isLoading) {
+                        item {
                             MessageCardPlaceholder()
-                        } else {
+                        }
+                    } else {
+                        items(uiState.messages.size) { index ->
+                            val message = uiState.messages[index]
                             MessageCard(message = message)
                         }
                     }
@@ -108,7 +112,7 @@ fun ChatScreen(
                     modifier = Modifier
                         .padding(start = 20.dp, bottom = 16.dp)
                         .align(Alignment.BottomStart),
-                    colors = TextFieldDefaults.textFieldColors(Color(0xFF2E3A59)), //色適用されてない気がする・・・
+                    colors = TextFieldDefaults.textFieldColors(Color(0xFF2E3A59)),
                     value = uiState.inputText,
                     onValueChange = { onUpdateText(it) },
                     label = { Text("入力してね 🙌🏻") }
@@ -117,6 +121,7 @@ fun ChatScreen(
         }
     )
 }
+
 
 @Composable
 fun MessageCard(message: ReceivedMessage) {
@@ -147,15 +152,25 @@ fun MessageCard(message: ReceivedMessage) {
 
 @Composable
 fun MessageCardPlaceholder() {
-    Box(
+    Column(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxSize()
             .clip(RoundedCornerShape(8.dp))
-            .background(Color(0xFFC0C8DC))
-            .skeleton()
-    )
+            .background(Color.White)
+    ) {
+        repeat(10) {
+            Box(
+                modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth()
+                    .height(70.dp)
+                    .background(Color.LightGray)
+            )
+        }
+    }
 }
+
 @Preview
 @Composable
 private fun ChatScreenPreview() {

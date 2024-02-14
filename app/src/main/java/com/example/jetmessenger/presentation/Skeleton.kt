@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
+
 @Composable
 fun Modifier.skeleton(
     animationSpec: InfiniteRepeatableSpec<Float> = infiniteRepeatable(
@@ -32,11 +33,12 @@ fun Modifier.skeleton(
     )
 ): Modifier = composed {
 
-    var size by remember { mutableStateOf(IntSize(0,0)) }
+    var size by remember { mutableStateOf(IntSize.Zero) }
+
     val startOffsetX by rememberInfiniteTransition().animateFloat(
         initialValue = -2 * size.width.toFloat(),
         targetValue = 2 * size.width.toFloat(),
-        animationSpec = animationSpec, label = ""
+        animationSpec = animationSpec, ""
     )
 
     val linearGradient = Brush.linearGradient(
