@@ -36,6 +36,9 @@ import com.example.jetmessenger.data.api.sendMessageApi
 import com.example.jetmessenger.data.repository.GetMessagesRepositoryImpl
 import com.example.jetmessenger.data.repository.SendMessageRepositoryImpl
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.placeholder
+import com.google.accompanist.placeholder.shimmer
 import getMessagesApi
 import kotlinx.coroutines.Dispatchers
 
@@ -166,7 +169,14 @@ fun MessageCardPlaceholder() {
                     .height(75.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(Color.LightGray)
-                // .skeleton() 書いたらBoxが現れなくなるので、要修正
+                    .placeholder(
+                        visible = true,
+                        color = Color.Gray,
+                        shape = RoundedCornerShape(4.dp),
+                        highlight = PlaceholderHighlight.shimmer(
+                            highlightColor = Color.White,
+                        ),
+                    )
             )
         }
     }
