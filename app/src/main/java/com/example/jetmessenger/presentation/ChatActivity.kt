@@ -67,7 +67,7 @@ class ChatActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChatScreen(
+private fun ChatScreen(
     uiState: ChatUiState,
     onUpdateText: (String) -> Unit,
     onClickFabButton: () -> Unit
@@ -112,8 +112,8 @@ fun ChatScreen(
 
                 TextField(
                     modifier = Modifier
-                        .padding(start = 20.dp, bottom = 16.dp)
-                        .align(Alignment.End),
+                        .padding(start = 20.dp)
+                        .align(Alignment.Start),
                     colors = TextFieldDefaults.textFieldColors(Color(0xFF2E3A59)),
                     value = uiState.inputText,
                     onValueChange = { onUpdateText(it) },
@@ -126,7 +126,7 @@ fun ChatScreen(
 
 
 @Composable
-fun MessageCard(message: ReceivedMessage) {
+private fun MessageCard(message: ReceivedMessage) {
     Column(
         modifier = Modifier
             .padding(8.dp)
@@ -153,7 +153,7 @@ fun MessageCard(message: ReceivedMessage) {
 }
 
 @Composable
-fun MessageCardPlaceholder() {
+private fun MessageCardPlaceholder() {
     Column(
         modifier = Modifier
             .padding(8.dp)
