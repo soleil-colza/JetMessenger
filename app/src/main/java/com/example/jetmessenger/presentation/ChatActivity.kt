@@ -86,11 +86,11 @@ fun ChatScreen(
             }
         },
         content = { paddingValues ->
-            Box(
+            Column(
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxSize(),
-                contentAlignment = Alignment.Center
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 LazyColumn(
                     modifier = Modifier
@@ -113,7 +113,7 @@ fun ChatScreen(
                 TextField(
                     modifier = Modifier
                         .padding(start = 20.dp, bottom = 16.dp)
-                        .align(Alignment.BottomStart),
+                        .align(Alignment.End),
                     colors = TextFieldDefaults.textFieldColors(Color(0xFF2E3A59)),
                     value = uiState.inputText,
                     onValueChange = { onUpdateText(it) },
