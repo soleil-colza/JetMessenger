@@ -110,5 +110,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:$okhttp_version")
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttp_version")
 
+    val accompanist_version = "0.35.0-alpha"
+    implementation("com.google.accompanist:accompanist-placeholder:$accompanist_version")
+
 }
 

@@ -7,9 +7,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
@@ -36,6 +36,9 @@ import com.example.jetmessenger.data.api.sendMessageApi
 import com.example.jetmessenger.data.repository.GetMessagesRepositoryImpl
 import com.example.jetmessenger.data.repository.SendMessageRepositoryImpl
 import com.example.jetmessenger.ui.theme.JetMessengerTheme
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.placeholder
+import com.google.accompanist.placeholder.shimmer
 import getMessagesApi
 import kotlinx.coroutines.Dispatchers
 
@@ -95,8 +98,15 @@ fun ChatScreen(
                         .padding(top = 20.dp, bottom = 72.dp),
                     reverseLayout = true
                 ) {
-                    items(uiState.messages) { message ->
-                        MessageCard(message = message)
+                    if (uiState.isLoading) {
+                        item {
+                            MessageCardPlaceholder()
+                        }
+                    } else {
+                        items(uiState.messages.size) { index ->
+                            val message = uiState.messages[index]
+                            MessageCard(message = message)
+                        }
                     }
                 }
 
@@ -104,7 +114,7 @@ fun ChatScreen(
                     modifier = Modifier
                         .padding(start = 20.dp, bottom = 16.dp)
                         .align(Alignment.BottomStart),
-                    colors = TextFieldDefaults.textFieldColors(Color(0xFF2E3A59)), //色適用されてない気がする・・・
+                    colors = TextFieldDefaults.textFieldColors(Color(0xFF2E3A59)),
                     value = uiState.inputText,
                     onValueChange = { onUpdateText(it) },
                     label = { Text("入力してね 🙌🏻") }
@@ -113,6 +123,7 @@ fun ChatScreen(
         }
     )
 }
+
 
 @Composable
 fun MessageCard(message: ReceivedMessage) {
@@ -138,6 +149,36 @@ fun MessageCard(message: ReceivedMessage) {
             modifier = Modifier.padding(4.dp),
             style = TextStyle(color = Color(0xFF2E3A59))
         )
+    }
+}
+
+@Composable
+fun MessageCardPlaceholder() {
+    Column(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxSize()
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color.White)
+    ) {
+        repeat(10) {
+            Box(
+                modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxSize()
+                    .height(75.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color.LightGray)
+                    .placeholder(
+                        visible = true,
+                        color = Color.Gray,
+                        shape = RoundedCornerShape(4.dp),
+                        highlight = PlaceholderHighlight.shimmer(
+                            highlightColor = Color.White,
+                        ),
+                    )
+            )
+        }
     }
 }
 

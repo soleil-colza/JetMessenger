@@ -19,7 +19,7 @@ class ChatViewModel(
     val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
 
     private fun fetchMessages() {
-        // メッセージを取得中の状態にする
+
         _uiState.value = _uiState.value.copy(isLoading = true)
 
         viewModelScope.launch {
