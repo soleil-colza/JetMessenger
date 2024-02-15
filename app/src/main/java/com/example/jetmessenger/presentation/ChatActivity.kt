@@ -7,7 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -163,13 +162,16 @@ fun MessageCardPlaceholder() {
             Box(
                 modifier = Modifier
                     .padding(4.dp)
-                    .fillMaxWidth()
-                    .height(70.dp)
+                    .fillMaxSize()
+                    .height(75.dp)
+                    .clip(RoundedCornerShape(8.dp))
                     .background(Color.LightGray)
+                // .skeleton() 書いたらBoxが現れなくなるので、要修正
             )
         }
     }
 }
+
 
 @Preview
 @Composable

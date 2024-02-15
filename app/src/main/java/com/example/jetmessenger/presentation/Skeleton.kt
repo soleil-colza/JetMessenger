@@ -32,13 +32,14 @@ fun Modifier.skeleton(
         Color(0xFFB8B5B5)
     )
 ): Modifier = composed {
+    val infiniteTransition = rememberInfiniteTransition()
 
     var size by remember { mutableStateOf(IntSize.Zero) }
 
-    val startOffsetX by rememberInfiniteTransition().animateFloat(
+    val startOffsetX by infiniteTransition.animateFloat(
         initialValue = -2 * size.width.toFloat(),
         targetValue = 2 * size.width.toFloat(),
-        animationSpec = animationSpec, ""
+        animationSpec = animationSpec
     )
 
     val linearGradient = Brush.linearGradient(
